@@ -8,7 +8,14 @@ namespace GraphAlgorithms
 {
     public static class LargestCliqueNaiveFinder
     {
-        public static void Find(Graph graph, int n, List<int> clique, int v, ref List<int> largestClique)
+        public static List<int> Find(Graph graph)
+        {
+            List<int> largestClique = new();
+            Find(graph, graph.Size, new List<int>(), 0, ref largestClique);
+            return largestClique;
+        }
+
+        private static void Find(Graph graph, int n, List<int> clique, int v, ref List<int> largestClique)
         {
             for (int i = v; i < n; i++)
             {
@@ -26,7 +33,7 @@ namespace GraphAlgorithms
             {
                 foreach (int v in clique)
                 {
-                    if (u != v && !graph.AreNeighbours(u, v))
+                    if (u != v && !graph.AreNeighborsInBothDirections(u, v))
                         return false;
                 }
             }

@@ -22,9 +22,9 @@ public class Graph
         AdjacencyMatrix[v][u] += 1;
     }
     
-    public void SetEdge(int from, int to, int value) => AdjacencyMatrix[from][to] = value;
+    public void SetNumberOfEdges(int from, int to, int value) => AdjacencyMatrix[from][to] = value;
     
-    public int GetEdge(int from, int to) => AdjacencyMatrix[from][to];
+    public int GetNumberOfEdges(int from, int to) => AdjacencyMatrix[from][to];
 
     public int GetNumberOfEdges()
     {
@@ -48,14 +48,7 @@ public class Graph
         return degree;
     }
 
-    // edges need to be in both sides
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="vertex1"></param>
-    /// <param name="vertex2"></param>
-    /// <returns></returns>
-    public bool AreNeighbours(int vertex1, int vertex2)
+    public bool AreNeighborsInBothDirections(int vertex1, int vertex2)
     {
         if (AdjacencyMatrix[vertex1][vertex2] != 0 && AdjacencyMatrix[vertex2][vertex1] != 0)
             return true;

@@ -8,9 +8,10 @@ namespace GraphAlgorithms
 {
     public static class LargestCommonSubgraphNaiveFinder
     {
-        public static Result Find(Graph graph1, Graph graph2) 
+        public static LargestCommonSubgraphFinderResult Find(Graph graph1, Graph graph2) 
         {
-            (int minSize, int maxSize) = (Math.Min(graph1.Size, graph2.Size), Math.Max(graph1.Size, graph2.Size)); 
+            int minSize = Math.Min(graph1.Size, graph2.Size);
+            int maxSize = Math.Max(graph1.Size, graph2.Size); 
             Graph result = new Graph(maxSize);
             int resultNumOfEdges = 0;
             int[][]? permutationUsedInResult = null;
@@ -51,7 +52,7 @@ namespace GraphAlgorithms
             }
             var newGraph1 = new Graph(graph1.Size);
             newGraph1.AdjacencyMatrix = permutationUsedInResult ?? new int[newGraph1.Size][];
-            return new Result(newGraph1, graph2, result);
+            return new LargestCommonSubgraphFinderResult(newGraph1, graph2, result);
         }
 
         public static List<int[][]> GenerateColumnsPermutations(int[][] table)
@@ -114,20 +115,6 @@ namespace GraphAlgorithms
                 (originalArray[startRow], originalArray[i]) = (originalArray[i], originalArray[startRow]);
                 PermuteRows(originalArray, permutations, startRow + 1, rows, cols);
                 (originalArray[startRow], originalArray[i]) = (originalArray[i], originalArray[startRow]);
-            }
-        }
-
-        public class Result
-        {
-            public Graph graph1 { get; set; }
-            public Graph graph2 { get; set; }
-            public Graph CommonSubgraph { get; set; }
-
-            public Result(Graph graph1, Graph graph2, Graph commonSubgraph)
-            {
-                this.graph1 = graph1;
-                this.graph2 = graph2;
-                CommonSubgraph = commonSubgraph;
             }
         }
     }

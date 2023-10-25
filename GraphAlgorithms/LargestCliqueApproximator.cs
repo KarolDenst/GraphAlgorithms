@@ -20,8 +20,8 @@ public static class LargestCliqueApproximator
             aliveVertices.RemoveAt(aliveVertices.Count - 1);
             foreach (var vertex in aliveVertices)
             {
-                vertexDegrees[vertex] -= graph.GetEdge(vertex, removed);
-                vertexDegrees[vertex] -= graph.GetEdge(removed, vertex);
+                vertexDegrees[vertex] -= graph.GetNumberOfEdges(vertex, removed);
+                vertexDegrees[vertex] -= graph.GetNumberOfEdges(removed, vertex);
             }
 
             vertexDegrees[removed] = 0;

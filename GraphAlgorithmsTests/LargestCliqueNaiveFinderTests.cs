@@ -165,7 +165,7 @@ namespace GraphAlgorithms.Tests
                 graph = new Graph(random.Next(1, maxSize));
                 int cliqueSize = random.Next(1, graph.Size);
                 var clique = GenerateClique(graph, cliqueSize);
-                GenerateAdditionalVertices(graph, clique);
+                GenerateAdditionalEdges(graph, clique);
                 yield return new TestCaseData(graph, clique);
             }
         }
@@ -188,7 +188,7 @@ namespace GraphAlgorithms.Tests
             return clique;
         }
 
-        private static void GenerateAdditionalVertices(Graph graph, List<int> clique)
+        private static void GenerateAdditionalEdges(Graph graph, List<int> clique)
         {
             Random random = new Random();
             int add = random.Next(graph.Size);
@@ -205,8 +205,7 @@ namespace GraphAlgorithms.Tests
         [TestCaseSource(nameof(TestCases))]
         public void FindTest(Graph graph, List<int> expectedResult)
         {
-            List<int> result = new();
-            LargestCliqueNaiveFinder.Find(graph, graph.Size, new List<int>(), 0, ref result);
+            List<int> result = LargestCliqueNaiveFinder.Find(graph);
             Assert.That(result, Is.EquivalentTo(expectedResult));
         }
     }

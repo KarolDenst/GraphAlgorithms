@@ -15,7 +15,7 @@ public static class GraphFactory
             for (int j = 0; j < size; j++)
             {
                 if (i == j) continue;
-                graph.SetEdge(i, j, 1);
+                graph.SetNumberOfEdges(i, j, 1);
             }
         }
         return graph;
@@ -32,7 +32,7 @@ public static class GraphFactory
             int from = random.Next(size);
             int to = random.Next(size);
             if (from == to) continue;
-            if (graph.GetEdge(from, to) > 0) continue;
+            if (graph.GetNumberOfEdges(from, to) > 0) continue;
             graph.AddEdge(from, to);
             counter++;
         }
@@ -62,7 +62,7 @@ public static class GraphFactory
             for (int j = 0; j < cliqueSize; j++)
             {
                 if (i == j) continue;
-                graph.SetEdge(indices[i], indices[j], 1);
+                graph.SetNumberOfEdges(indices[i], indices[j], 1);
             }
         }
 
@@ -72,7 +72,7 @@ public static class GraphFactory
             int from = random.Next(size);
             int to = random.Next(size);
             if (from == to) continue;
-            if (graph.GetEdge(from, to) > 0) continue;
+            if (graph.GetNumberOfEdges(from, to) > 0) continue;
             graph.AddEdge(from, to);
             counter++;
         }
