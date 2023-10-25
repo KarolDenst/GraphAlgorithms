@@ -31,27 +31,27 @@ namespace GraphAlgorithms.Tests
             yield return new TestCaseData(graph, new List<int> { 0, 1 });
 
             graph = new Graph(5);
-            graph.AdjacencyMatrix = new int[][] {
-                new int[] { 0, 1, 1, 1, 1 },
-                new int[] { 1, 0, 1, 1, 1 },
-                new int[] { 1, 1, 0, 1, 1 },
-                new int[] { 1, 1, 1, 0, 1 },
-                new int[] { 1, 1, 1, 1, 0 },
+            graph.AdjacencyMatrix = new int[,] {
+                { 0, 1, 1, 1, 1 },
+                { 1, 0, 1, 1, 1 },
+                { 1, 1, 0, 1, 1 },
+                { 1, 1, 1, 0, 1 },
+                { 1, 1, 1, 1, 0 },
             };
             yield return new TestCaseData(graph, new List<int> { 0, 1, 2, 3, 4 });
 
             graph = new Graph(10);
-            graph.AdjacencyMatrix = new int[][] {
-                new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 0, 1, 1, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 0, 1, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 0, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 0, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 1, 0, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 }
+            graph.AdjacencyMatrix = new int[,] {
+                { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 0, 1, 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 1, 0, 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 1, 0, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 1, 1, 0, 1, 1, 1 },
+                { 1, 1, 1, 1, 1, 1, 1, 0, 1, 1 },
+                { 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
+                { 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 }
             };
             yield return new TestCaseData(graph, new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
 
@@ -70,60 +70,60 @@ namespace GraphAlgorithms.Tests
 
             // graphs with edges that not belong to any cliques
             graph = new Graph(10);
-            graph.AdjacencyMatrix = new int[][] {
-                new int[] { 0, 1, 0, 0, 1, 0, 0, 1, 0, 0 },
-                new int[] { 1, 0, 0, 0, 1, 0, 1, 1, 0, 0 },
-                new int[] { 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
-                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                new int[] { 1, 1, 0, 0, 0, 0, 1, 1, 0, 0 },
-                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                new int[] { 0, 1, 0, 1, 1, 0, 0, 0, 1, 0 },
-                new int[] { 1, 1, 0, 0, 1, 0, 0, 0, 0, 0 },
-                new int[] { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
-                new int[] { 1, 0, 0, 1, 0, 0, 0, 0, 1, 0 }
+            graph.AdjacencyMatrix = new int[,] {
+                { 0, 1, 0, 0, 1, 0, 0, 1, 0, 0 },
+                { 1, 0, 0, 0, 1, 0, 1, 1, 0, 0 },
+                { 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 1, 0, 0, 0, 0, 1, 1, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 1, 0, 1, 1, 0, 0, 0, 1, 0 },
+                { 1, 1, 0, 0, 1, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
+                { 1, 0, 0, 1, 0, 0, 0, 0, 1, 0 }
             };
             yield return new TestCaseData(graph, new List<int> { 0, 1, 4, 7 });
 
             graph = new Graph(10);
-            graph.AdjacencyMatrix = new int[][] {
-                new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 0, 1, 1, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 0, 1, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 0, 1, 1, 1, 1 },
-                new int[] { 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 1, 0, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 }
+            graph.AdjacencyMatrix = new int[,] {
+                { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 0, 1, 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 1, 0, 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 1, 0, 1, 1, 1, 1 },
+                { 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 },
+                { 1, 1, 1, 1, 1, 1, 1, 0, 1, 1 },
+                { 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
+                { 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 }
             };
             yield return new TestCaseData(graph, new List<int> { 0, 1, 2, 3, 4, 7, 8, 9});
 
 
             graph = new Graph(10);
-            graph.AdjacencyMatrix = new int[][] {
-                new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 0, 1, 1, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 0, 1, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 0, 1, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 0, 1, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 1, 0, 1, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
-                new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 }
+            graph.AdjacencyMatrix = new int[,] {
+                { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 0, 1, 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 1, 0, 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 1, 0, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 1, 1, 0, 1, 1, 1 },
+                { 1, 1, 1, 1, 1, 1, 1, 0, 1, 1 },
+                { 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
+                { 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 }
             };
             yield return new TestCaseData(graph, Enumerable.Range(0, 9).ToList());
 
             // many equal cliques
             graph = new Graph(6);
-            graph.AdjacencyMatrix = new int[][] {
-                new int[] { 0, 1, 1, 0, 1, 1 },
-                new int[] { 1, 0, 1, 1, 0, 1 },
-                new int[] { 1, 1, 0, 1, 1, 0 },
-                new int[] { 0, 1, 1, 0, 1, 1 },
-                new int[] { 1, 0, 1, 1, 0, 1 },
-                new int[] { 1, 1, 0, 1, 1, 0 },
+            graph.AdjacencyMatrix = new int[,] {
+                { 0, 1, 1, 0, 1, 1 },
+                { 1, 0, 1, 1, 0, 1 },
+                { 1, 1, 0, 1, 1, 0 },
+                { 0, 1, 1, 0, 1, 1 },
+                { 1, 0, 1, 1, 0, 1 },
+                { 1, 1, 0, 1, 1, 0 },
             };
             yield return new TestCaseData(graph, new List<int> { 0, 1, 2 });
 
@@ -135,24 +135,24 @@ namespace GraphAlgorithms.Tests
 
             // 1) v = 3: 3 = deg(v) == MAX_CLIQUE = 3
             graph = new Graph(5);
-            graph.AdjacencyMatrix = new int[][] {
-                new int[] { 0, 1, 1, 1, 0 },
-                new int[] { 1, 0, 1, 1, 0 },
-                new int[] { 1, 1, 0, 1, 0 },
-                new int[] { 1, 1, 0, 0, 1 },
-                new int[] { 0, 0, 0, 1, 0 },
+            graph.AdjacencyMatrix = new int[,] {
+                { 0, 1, 1, 1, 0 },
+                { 1, 0, 1, 1, 0 },
+                { 1, 1, 0, 1, 0 },
+                { 1, 1, 0, 0, 1 },
+                { 0, 0, 0, 1, 0 },
             };
             yield return new TestCaseData(graph, new List<int> { 0, 1, 2 });
 
             // 2) v = 3 : 4 = deg(v) > MAX_CLIQUE = 3
             graph = new Graph(6);
-            graph.AdjacencyMatrix = new int[][] {
-                new int[] { 0, 1, 1, 1, 0, 0 },
-                new int[] { 1, 0, 1, 0, 0, 0 },
-                new int[] { 1, 1, 0, 1, 0, 0 },
-                new int[] { 1, 0, 1, 0, 1, 1 },
-                new int[] { 0, 0, 0, 1, 0, 0 },
-                new int[] { 0, 0, 0, 1, 0, 0 },
+            graph.AdjacencyMatrix = new int[,] {
+                { 0, 1, 1, 1, 0, 0 },
+                { 1, 0, 1, 0, 0, 0 },
+                { 1, 1, 0, 1, 0, 0 },
+                { 1, 0, 1, 0, 1, 1 },
+                { 0, 0, 0, 1, 0, 0 },
+                { 0, 0, 0, 1, 0, 0 },
             };
             yield return new TestCaseData(graph, new List<int> { 0, 1, 2 });
 

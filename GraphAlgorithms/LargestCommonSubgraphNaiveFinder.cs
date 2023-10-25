@@ -8,26 +8,22 @@ namespace GraphAlgorithms
 {
     public static class LargestCommonSubgraphNaiveFinder
     {
-        public static LargestCommonSubgraphFinderResult Find(Graph graph1, Graph graph2) 
+        public static LargestCommonSubgraphFinderResult Find(Graph graph1, Graph graph2)
         {
             int minSize = Math.Min(graph1.Size, graph2.Size);
-            int maxSize = Math.Max(graph1.Size, graph2.Size); 
+            int maxSize = Math.Max(graph1.Size, graph2.Size);
             Graph result = new Graph(maxSize);
             int resultNumOfEdges = 0;
-            int[][]? permutationUsedInResult = null;
             if (graph1.Size < graph2.Size)
                 (graph1, graph2) = (graph2, graph1);
-            List<int[][]> columnsPermutations = GenerateColumnsPermutations(graph1.AdjacencyMatrix);
-            for(int colPer = 0; colPer < columnsPermutations.Count; ++colPer)
+            List<int> listOfIndices = Enumerable.Range(0, graph1.Size).ToList();
+            List<int> rowPermutationUsedInResult = Enumerable.Range(0, graph1.Size).ToList();
+            List<int> columnPermutationUsedInResult = Enumerable.Range(0, graph1.Size).ToList();
+            List<List<int>> indicesPermutations = GeneratePermutations(listOfIndices);
+            foreach (var columnPermutation in indicesPermutations)
             {
-                var columnPermutation = columnsPermutations[colPer];
-                List<int[][]> rowsPermutations = GenerateRowsPermutations(columnPermutation);
-                for (int rowPer = 0; rowPer < rowsPermutations.Count; ++rowPer)
+                foreach (var rowPermutation in indicesPermutations)
                 {
-                    var rowPermutation = rowsPermutations[rowPer];
-                    // remove edeges from a vertex to itself
-                    for (int i = 0; i < rowPermutation.Length; i++)
-                        rowPermutation[i][i] = 0;
                     // search for potential result
                     Graph potentialResult = new Graph(maxSize);
                     int numOfEdges = 0;
@@ -35,7 +31,11 @@ namespace GraphAlgorithms
                     {
                         for (int j = 0; j < minSize; j++)
                         {
-                            if (rowPermutation[i][j] == 1 && graph2.AdjacencyMatrix[i][j] == 1)
+                            // remove edeges from a vertex to itself
+                            if (i == j) continue;
+                            var graph1Value = graph1.AdjacencyMatrix[rowPermutation[i], columnPermutation[j]];
+                            var graph2Value = graph2.AdjacencyMatrix[i, j];
+                            if (graph1Value != 0 && graph2Value != 0)
                             {
                                 potentialResult.AddEdge(i, j);
                                 ++numOfEdges;
@@ -46,75 +46,54 @@ namespace GraphAlgorithms
                     {
                         result = potentialResult;
                         resultNumOfEdges = numOfEdges;
-                        permutationUsedInResult = rowPermutation;
+                        rowPermutationUsedInResult = rowPermutation;
+                        columnPermutationUsedInResult = columnPermutation;
                     }
                 }
             }
-            var newGraph1 = new Graph(graph1.Size);
-            newGraph1.AdjacencyMatrix = permutationUsedInResult ?? new int[newGraph1.Size][];
+            var newGraph1 = GetGraphAfterPermutations(graph1, rowPermutationUsedInResult, columnPermutationUsedInResult);
             return new LargestCommonSubgraphFinderResult(newGraph1, graph2, result);
         }
 
-        public static List<int[][]> GenerateColumnsPermutations(int[][] table)
+        private static Graph GetGraphAfterPermutations(Graph graph, List<int> rowPermutationUsedInResult, List<int> columnPermutationUsedInResult)
         {
-            List<int[][]> permutations = new List<int[][]>();
-            PermuteColumns(table, 0, permutations);
+            var newGraph = new Graph(graph.Size);
+            for (int i = 0; i < newGraph.Size; ++i)
+            {
+                for (int j = 0; j < newGraph.Size; ++j)
+                {
+                    if (graph.AdjacencyMatrix[i, j] == 1)
+                    {
+                        int newRowIndex = rowPermutationUsedInResult[i];
+                        int newColumnIndex = columnPermutationUsedInResult[j];
+                        newGraph.AdjacencyMatrix[newRowIndex, newColumnIndex] = 1;
+                    }
+                }
+            }
+            return newGraph;
+        }
+
+        private static List<List<int>> GeneratePermutations(List<int> elements)
+        {
+            List<List<int>> permutations = new List<List<int>>();
+            GeneratePermutationsRecursive(elements, 0, elements.Count - 1, permutations);
             return permutations;
         }
 
-        private static void PermuteColumns(int[][] table, int start, List<int[][]> permutations)
+        private static void GeneratePermutationsRecursive(List<int> elements, int start, int end, List<List<int>> permutations)
         {
-            if (start == table[0].Length - 1)
+            if (start == end)
             {
-                int[][] clone = table.Select(row => row.ToArray()).ToArray();
-                permutations.Add(clone);
+                permutations.Add(new List<int>(elements));
             }
             else
             {
-                for (int i = start; i < table[0].Length; i++)
+                for (int i = start; i <= end; i++)
                 {
-                    SwapColumns(table, start, i);
-                    PermuteColumns(table, start + 1, permutations);
-                    SwapColumns(table, start, i);
+                    (elements[start], elements[i]) = (elements[i], elements[start]);
+                    GeneratePermutationsRecursive(elements, start + 1, end, permutations);
+                    (elements[start], elements[i]) = (elements[i], elements[start]);
                 }
-            }
-        }
-
-        private static void SwapColumns(int[][] table, int column1, int column2)
-        {
-            for (int i = 0; i < table.Length; i++)
-                (table[i][column1], table[i][column2]) = (table[i][column2], table[i][column1]);
-        }
-
-
-        public static List<int[][]> GenerateRowsPermutations(int[][] originalArray)
-        {
-            List<int[][]> permutations = new List<int[][]>();
-            int rows = originalArray.Length;
-            int cols = originalArray[0].Length;
-            PermuteRows(originalArray, permutations, 0, rows, cols);
-            return permutations;
-        }
-
-        private static void PermuteRows(int[][] originalArray, List<int[][]> permutations, int startRow, int rows, int cols)
-        {
-            if (startRow == rows)
-            {
-                int[][] copy = new int[rows][];
-                for (int i = 0; i < rows; i++)
-                {
-                    copy[i] = new int[cols];
-                    for (int j = 0; j < cols; j++)
-                        copy[i][j] = originalArray[i][j];
-                }
-                permutations.Add(copy);
-                return;
-            }
-            for (int i = startRow; i < rows; i++)
-            {
-                (originalArray[startRow], originalArray[i]) = (originalArray[i], originalArray[startRow]);
-                PermuteRows(originalArray, permutations, startRow + 1, rows, cols);
-                (originalArray[startRow], originalArray[i]) = (originalArray[i], originalArray[startRow]);
             }
         }
     }
