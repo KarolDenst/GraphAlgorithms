@@ -19,10 +19,11 @@ namespace GraphAlgorithms
         {
             for (int i = v; i < n; i++)
             {
-                List<int> newClique = new List<int>(clique){ i };
-                if (IsClique(graph, newClique) && newClique.Count > largestClique.Count)
-                    largestClique = new List<int>(newClique);
-                Find(graph, n, newClique, i + 1, ref largestClique);
+                clique.Add(i);
+                if (IsClique(graph, clique) && clique.Count > largestClique.Count)
+                    largestClique = new List<int>(clique);
+                Find(graph, n, clique, i + 1, ref largestClique);
+                clique.Remove(i);
             }
         }
 

@@ -176,11 +176,12 @@ namespace GraphAlgorithms.Tests
                 return new List<int>() { 0 };
             Random random = new Random();
             List<int> clique = new List<int>();
+            List<int> availableVertices = Enumerable.Range(0, graph.Size).ToList();
             while (clique.Count < cliqueSize)
             {
-                int u = random.Next(graph.Size);
-                if (clique.Contains(u))
-                    continue;
+                int index = random.Next(availableVertices.Count);
+                int u = availableVertices[index];
+                availableVertices.RemoveAt(index);
                 foreach (var v in clique)
                     graph.AddBothSidesEdge(u, v);
                 clique.Add(u);
