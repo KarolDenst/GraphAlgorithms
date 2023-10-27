@@ -1,100 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace GraphAlgorithms;
 
-namespace GraphAlgorithms
+public static class LargestCommonSubgraphFinder
 {
-    public static class LargestCommonSubgraphNaiveFinder
+    public static int Find(Graph graph1, Graph graph2)
     {
-        public static LargestCommonSubgraphFinderResult Find(Graph graph1, Graph graph2)
+        int minSize = Math.Min(graph1.Size, graph2.Size);
+        var graph1Subsets = GenerateAllSubsetsSmallerOrEqualToSize(graph1.Size, minSize);
+        var graph2Subsets = GenerateAllSubsetsSmallerOrEqualToSize(graph2.Size, minSize);
+        var maxCommonSize = 0;
+
+        for (int i = 0; i < graph1Subsets.Count; i++)
         {
-            int minSize = Math.Min(graph1.Size, graph2.Size);
-            int maxSize = Math.Max(graph1.Size, graph2.Size);
-            Graph result = new Graph(maxSize);
-            int resultNumOfEdges = 0;
-            if (graph1.Size < graph2.Size)
-                (graph1, graph2) = (graph2, graph1);
-            List<int> listOfIndices = Enumerable.Range(0, graph1.Size).ToList();
-            List<int> rowPermutationUsedInResult = Enumerable.Range(0, graph1.Size).ToList();
-            List<int> columnPermutationUsedInResult = Enumerable.Range(0, graph1.Size).ToList();
-            List<List<int>> indicesPermutations = GeneratePermutations(listOfIndices);
-            foreach (var columnPermutation in indicesPermutations)
+            for (int j = 0; j < graph2Subsets.Count; j++)
             {
-                foreach (var rowPermutation in indicesPermutations)
+                if (graph1Subsets[i].Count != graph2Subsets[j].Count) continue;
+
+                foreach (var perm1 in Permutations(graph1Subsets[i]))
                 {
-                    // search for potential result
-                    Graph potentialResult = new Graph(maxSize);
-                    int numOfEdges = 0;
-                    for (int i = 0; i < minSize; i++)
+                    foreach (var perm2 in Permutations(graph2Subsets[j]))
                     {
-                        for (int j = 0; j < minSize; j++)
+                        if (AreCommon(graph1, graph2, perm1, perm2))
                         {
-                            // remove edeges from a vertex to itself
-                            if (i == j) continue;
-                            var graph1Value = graph1.AdjacencyMatrix[rowPermutation[i], columnPermutation[j]];
-                            var graph2Value = graph2.AdjacencyMatrix[i, j];
-                            if (graph1Value != 0 && graph2Value != 0)
+                            if (graph1Subsets[i].Count > maxCommonSize)
                             {
-                                potentialResult.AddEdge(i, j);
-                                ++numOfEdges;
+                                maxCommonSize = graph1Subsets[i].Count;
                             }
                         }
                     }
-                    if (numOfEdges > resultNumOfEdges)
-                    {
-                        result = potentialResult;
-                        resultNumOfEdges = numOfEdges;
-                        rowPermutationUsedInResult = rowPermutation;
-                        columnPermutationUsedInResult = columnPermutation;
-                    }
                 }
             }
-            var newGraph1 = GetGraphAfterPermutations(graph1, rowPermutationUsedInResult, columnPermutationUsedInResult);
-            return new LargestCommonSubgraphFinderResult(newGraph1, graph2, result);
         }
 
-        private static Graph GetGraphAfterPermutations(Graph graph, List<int> rowPermutationUsedInResult, List<int> columnPermutationUsedInResult)
+        return maxCommonSize;
+    }
+
+    public static List<List<int>> GenerateAllSubsetsSmallerOrEqualToSize(int n, int size)
+    {
+        var allSubsets = new List<List<int>>();
+        int totalSubsets = 1 << n;
+
+        for (int i = 0; i < totalSubsets; i++)
         {
-            var newGraph = new Graph(graph.Size);
-            for (int i = 0; i < newGraph.Size; ++i)
+            var subset = new List<int>();
+            for (int j = 0; j < n; j++)
             {
-                for (int j = 0; j < newGraph.Size; ++j)
+                if ((i & (1 << j)) != 0)
                 {
-                    if (graph.AdjacencyMatrix[i, j] == 1)
-                    {
-                        int newRowIndex = rowPermutationUsedInResult[i];
-                        int newColumnIndex = columnPermutationUsedInResult[j];
-                        newGraph.AdjacencyMatrix[newRowIndex, newColumnIndex] = 1;
-                    }
+                    subset.Add(j);
                 }
             }
-            return newGraph;
+
+            if (subset.Count > size) continue;
+            allSubsets.Add(subset);
         }
 
-        private static List<List<int>> GeneratePermutations(List<int> elements)
-        {
-            List<List<int>> permutations = new List<List<int>>();
-            GeneratePermutationsRecursive(elements, 0, elements.Count - 1, permutations);
-            return permutations;
-        }
+        return allSubsets;
+    }
 
-        private static void GeneratePermutationsRecursive(List<int> elements, int start, int end, List<List<int>> permutations)
+    public static List<List<int>> Permutations(List<int> values)
+    {
+        if (values.Count == 1)
+            return new List<List<int>>() { values };
+        return values.SelectMany(v => Permutations(values.Where(x => x.CompareTo(v) != 0).ToList()), (v, p) => p.Prepend(v).ToList()).ToList();
+    }
+
+    public static bool AreCommon(Graph graph1, Graph graph2, List<int> subset1, List<int> subset2)
+    {
+        int count = subset1.Count;
+
+        for (int i = 0; i < count; i++)
         {
-            if (start == end)
+            for (int j = 0; j < count; j++)
             {
-                permutations.Add(new List<int>(elements));
-            }
-            else
-            {
-                for (int i = start; i <= end; i++)
+                if (graph1.AdjacencyMatrix[subset1[i], subset1[j]] != graph2.AdjacencyMatrix[subset2[i], subset2[j]])
                 {
-                    (elements[start], elements[i]) = (elements[i], elements[start]);
-                    GeneratePermutationsRecursive(elements, start + 1, end, permutations);
-                    (elements[start], elements[i]) = (elements[i], elements[start]);
+                    return false;
                 }
             }
         }
+
+        return true;
     }
 }
