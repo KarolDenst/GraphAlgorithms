@@ -2,21 +2,15 @@
 {
     internal class MaximumCommonSubgraph
     {
-        internal class Subgraph
-        {
-            public Graph Graph;
-            public int[] Mapping;
-
-            public Subgraph(Graph graph, int[] mapping)
-            {
-                Graph = graph;
-                Mapping = mapping;
-            }
-        }
-
+        /// <summary>
+        /// Finds a maximum common subgraph of two graphs
+        /// </summary>
+        /// <param name="graph1"></param>
+        /// <param name="graph2"></param>
+        /// <returns>a pair containing vertices of both subgraphs</returns>
         public static (int[]?, int[]?) Find(Graph graph1, Graph graph2)
         {
-            Graph maxCommonSubgraph = new Graph(0);
+            int[] maxCommonSubgraph = new int[0];
             int[]? verticesInGraph1 = null;
             int[]? verticesInGraph2 = null;
 
@@ -27,13 +21,13 @@
             {
                 foreach (var subgraph2 in subgraphs2)
                 {
-                    if (AreIsomorphic(subgraph1.Graph, subgraph2.Graph))
+                    if (AreSubgraphsIsomorphic(subgraph1, graph1, subgraph2, graph2))
                     {
-                        if (maxCommonSubgraph.Size < subgraph1.Graph.Size)
+                        if (maxCommonSubgraph.Length < subgraph1.Length)
                         {
-                            maxCommonSubgraph = subgraph1.Graph;
-                            verticesInGraph1 = subgraph1.Mapping;
-                            verticesInGraph2 = subgraph2.Mapping;
+                            maxCommonSubgraph = subgraph1;
+                            verticesInGraph1 = subgraph1;
+                            verticesInGraph2 = subgraph2;
                         }
                     }
                 }
@@ -42,10 +36,10 @@
             return (verticesInGraph1, verticesInGraph2);
         }
 
-        private static List<Subgraph> GenerateSubgraphs(Graph graph)
+        private static List<int[]> GenerateSubgraphs(Graph graph)
         {
             int n = graph.Size;
-            var subgraphs = new List<Subgraph>();
+            var subgraphs = new List<int[]>();
             for (int r = 1; r <= n; r++)
             {
                 foreach (var subgraphIndices in GetKCombs(Enumerable.Range(0, n), r))
@@ -60,19 +54,19 @@
                         }
                     }
 
-                    subgraphs.Add(new Subgraph(subgraph, subgraphIndices));
+                    subgraphs.Add(subgraphIndices);
                 }
             }
 
             return subgraphs;
         }
 
-        private static bool AreIsomorphic(Graph graph1, Graph graph2)
+        private static bool AreSubgraphsIsomorphic(int[] subgraph1, Graph graph1, int[] subgraph2, Graph graph2)
         {
-            if (graph1.Size != graph2.Size)
+            if (subgraph1.Length != subgraph2.Length)
                 return false;
 
-            int n = graph1.Size;
+            int n = subgraph1.Length;
             var vertices = Enumerable.Range(0, n).ToList();
 
             foreach (var perm in Permutations(vertices, vertices.Count))
@@ -81,11 +75,12 @@
 
                 for (int i = 0; i < n; i++)
                 {
-                    var v1 = perm[i];
+                    var permutedI = perm[i];
                     for (int j = 0; j < n; j++)
                     {
-                        var v2 = perm[j];
-                        if (graph1.AdjacencyMatrix[i, j] != graph2.AdjacencyMatrix[v1, v2])
+                        var permutedJ = perm[j];
+                        if (graph1.AdjacencyMatrix[subgraph1[i], subgraph1[j]]
+                            != graph2.AdjacencyMatrix[subgraph2[permutedI], subgraph2[permutedJ]])
                         {
                             isomorphic = false;
                             break;
