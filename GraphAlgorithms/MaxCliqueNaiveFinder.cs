@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GraphAlgorithms
+﻿namespace GraphAlgorithms
 {
-    public static class LargestCliqueNaiveFinder
+    public static class MaxCliqueNaiveFinder
     {
+        /// <summary>
+        /// Finds the maximum clique in a graph.
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <returns>List of vertices in the maximum clique</returns>
         public static List<int> Find(Graph graph)
         {
             List<int> largestClique = new();
@@ -23,7 +22,7 @@ namespace GraphAlgorithms
                 if (IsClique(graph, clique) && clique.Count > largestClique.Count)
                     largestClique = new List<int>(clique);
                 Find(graph, n, clique, i + 1, ref largestClique);
-                clique.Remove(i);
+                clique.RemoveAt(clique.Count - 1);
             }
         }
 

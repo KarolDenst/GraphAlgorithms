@@ -1,15 +1,9 @@
-﻿using GraphAlgorithms;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace GraphAlgorithms.Tests
 {
     [TestFixture]
-    public class LargestCliqueNaiveFinderTests
+    public class MaxCliqueNaiveFinderTests
     {
         private static IEnumerable<TestCaseData> TestCases()
         {
@@ -61,7 +55,7 @@ namespace GraphAlgorithms.Tests
 
             // graph with many cliques of size 2
             graph = new Graph(8);
-            for(int i = 0; i < 8; i += 2)
+            for (int i = 0; i < 8; i += 2)
             {
                 graph.AddEdge(i, i + 1);
                 graph.AddEdge(i + 1, i);
@@ -97,7 +91,7 @@ namespace GraphAlgorithms.Tests
                 { 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
                 { 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 }
             };
-            yield return new TestCaseData(graph, new List<int> { 0, 1, 2, 3, 4, 7, 8, 9});
+            yield return new TestCaseData(graph, new List<int> { 0, 1, 2, 3, 4, 7, 8, 9 });
 
 
             graph = new Graph(10);
@@ -206,7 +200,7 @@ namespace GraphAlgorithms.Tests
         [TestCaseSource(nameof(TestCases))]
         public void FindTest(Graph graph, List<int> expectedResult)
         {
-            List<int> result = LargestCliqueNaiveFinder.Find(graph);
+            List<int> result = MaxCliqueNaiveFinder.Find(graph);
             Assert.That(result, Is.EquivalentTo(expectedResult));
         }
     }

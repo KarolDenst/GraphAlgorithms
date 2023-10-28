@@ -48,7 +48,7 @@ PrintResult(graph1, graph2);
 
 void PrintResult(Graph graph1, Graph graph2)
 {
-    var result = MaximumCommonSubgraph.Find(graph1, graph2);
+    var result = MCSNaiveFinder.Find(graph1, graph2);
 
     Console.WriteLine("Graph 1");
     foreach (var i in result.Item1)
@@ -58,6 +58,12 @@ void PrintResult(Graph graph1, Graph graph2)
     foreach (var i in result.Item2)
         Console.Write(i + " ");
     Console.WriteLine();
-    var cnt = LargestCommonSubgraphFinder.Find(graph1, graph2);
-    Console.WriteLine(cnt + "\n");
+}
+
+static List<T[]> GetKCombs<T>(IEnumerable<T> list, int length) where T : IComparable
+{
+    if (length == 1) return list.Select(t => new T[] { t }).ToList();
+    return GetKCombs(list, length - 1)
+        .SelectMany(t => list.Where(o => o.CompareTo(t.Last()) > 0),
+            (t1, t2) => t1.Concat(new T[] { t2 }).ToArray()).ToList();
 }

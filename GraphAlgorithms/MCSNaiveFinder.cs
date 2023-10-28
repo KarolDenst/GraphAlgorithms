@@ -1,18 +1,18 @@
 ﻿namespace GraphAlgorithms
 {
-    internal class MaximumCommonSubgraph
+    public class MCSNaiveFinder
     {
         /// <summary>
         /// Finds a maximum common subgraph of two graphs
         /// </summary>
         /// <param name="graph1"></param>
         /// <param name="graph2"></param>
-        /// <returns>a pair containing vertices of both subgraphs</returns>
-        public static (int[]?, int[]?) Find(Graph graph1, Graph graph2)
+        /// <returns>A pair of arrays which contain the vertices in the MCS in both graphs</returns>
+        public static (int[], int[]) Find(Graph graph1, Graph graph2)
         {
-            int[] maxCommonSubgraph = new int[0];
-            int[]? verticesInGraph1 = null;
-            int[]? verticesInGraph2 = null;
+            int[] maxCommonSubgraph = Array.Empty<int>();
+            int[] verticesInGraph1 = Array.Empty<int>();
+            int[] verticesInGraph2 = Array.Empty<int>();
 
             var subgraphs1 = GenerateSubgraphs(graph1);
             var subgraphs2 = GenerateSubgraphs(graph2);
@@ -44,16 +44,6 @@
             {
                 foreach (var subgraphIndices in GetKCombs(Enumerable.Range(0, n), r))
                 {
-                    Graph subgraph = new Graph(r);
-                    for (int i = 0; i < r; i++)
-                    {
-                        for (int j = 0; j < r; j++)
-                        {
-                            subgraph.AdjacencyMatrix[i, j]
-                                = graph.AdjacencyMatrix[subgraphIndices[i], subgraphIndices[j]];
-                        }
-                    }
-
                     subgraphs.Add(subgraphIndices);
                 }
             }
