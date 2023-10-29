@@ -1,4 +1,6 @@
-﻿namespace GraphAlgorithms;
+﻿using System.Text;
+
+namespace GraphAlgorithms;
 
 public class Graph
 {
@@ -39,17 +41,28 @@ public class Graph
         int degree = 0;
         for (int i = 0; i < Size; i++)
         {
-            degree += AdjacencyMatrix[vertex,i];
-            degree += AdjacencyMatrix[i,vertex];
+            if (AdjacencyMatrix[vertex, i] > 0 && AdjacencyMatrix[i, vertex] > 0)
+                degree++;
         }
         return degree;
     }
-
+    
     public bool AreNeighborsInBothDirections(int vertex1, int vertex2)
     {
         if (AdjacencyMatrix[vertex1,vertex2] != 0 && AdjacencyMatrix[vertex2,vertex1] != 0)
             return true;
         return false;
+    }
+    
+    public IEnumerable<int> GetNeighbors(int vertex)
+    {
+        for (int i = 0; i < Size; i++)
+        {
+            if (AreNeighborsInBothDirections(vertex, i))
+            {
+                yield return i;
+            }
+        }
     }
     
     public IEnumerable<int> GetOutVertices(int vertex)
@@ -142,5 +155,21 @@ public class Graph
             }
             writer.WriteLine();
         }
+    }
+
+    public override string ToString()
+    {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < Size; i++)
+        {
+            for (int j = 0; j < Size; j++)
+            {
+                builder.Append(AdjacencyMatrix[i,j]);
+                if (j < Size - 1) builder.Append(' ');
+            }
+            builder.AppendLine();
+        }
+
+        return builder.ToString();
     }
 }

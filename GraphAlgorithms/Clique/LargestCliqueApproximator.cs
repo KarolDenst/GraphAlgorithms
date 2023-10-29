@@ -1,4 +1,4 @@
-﻿namespace GraphAlgorithms;
+﻿namespace GraphAlgorithms.Clique;
 
 public static class LargestCliqueApproximator
 {
