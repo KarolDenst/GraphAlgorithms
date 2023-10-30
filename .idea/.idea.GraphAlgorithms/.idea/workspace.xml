@@ -8,12 +8,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b0b83220-2153-4098-8080-a3614546336a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/GraphAlgorithms/Clique/MaxCliqueHeuristicFinder.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GraphAlgorithms/Clique/MaxCliqueFinder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphAlgorithms/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphAlgorithms/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphAlgorithms/Clique/MaxCliqueHeuristicFinder.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphAlgorithms/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphAlgorithms/Graph.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphAlgorithms/LargestCliqueApproximator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphAlgorithms/Clique/LargestCliqueApproximator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphAlgorithms/MaxCliqueNaiveFinder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphAlgorithms/Clique/MaxCliqueNaiveFinder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphAlgorithms/GraphAlgorithms.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GraphAlgorithms/GraphAlgorithms.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphAlgorithms/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphAlgorithms/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphAlgorithmsTests/MaxCliqueNaiveFinderTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphAlgorithmsTests/MaxCliqueNaiveFinderTests.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +26,11 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7fe8f459d5e0474486f6f379e179715b7b8b0/4e/70006035/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/kdens/RiderProjects/GraphAlgorithms/GraphAlgorithms/Program.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -40,20 +43,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;clique-heu&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\kdens\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
-      "C:\\Users\\kdens\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
-      "C:\\Users\\kdens\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\kdens\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\kdens\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\kdens\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="GraphAlgorithms" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -77,5 +80,38 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <condition expression="i == 4" language="C#" />
+          <url>file://$PROJECT_DIR$/GraphAlgorithms/Program.cs</url>
+          <line>12</line>
+          <properties documentPath="C:\Users\kdens\RiderProjects\GraphAlgorithms\GraphAlgorithms\Program.cs" initialLine="12" containingFunctionPresentation="">
+            <startOffsets>
+              <option value="362" />
+            </startOffsets>
+            <endOffsets>
+              <option value="396" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/GraphAlgorithms/Program.cs</url>
+          <line>27</line>
+          <properties documentPath="C:\Users\kdens\RiderProjects\GraphAlgorithms\GraphAlgorithms\Program.cs" initialLine="27" containingFunctionPresentation="">
+            <startOffsets>
+              <option value="883" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1014" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

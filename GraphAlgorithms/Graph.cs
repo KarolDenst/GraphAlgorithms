@@ -172,4 +172,21 @@ public class Graph
 
         return builder.ToString();
     }
+
+    public string ToString(List<int> indices)
+    {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < Size; i++)
+        {
+            for (int j = 0; j < Size; j++)
+            {
+                if (indices.Contains(i) && indices.Contains(j))
+                    builder.Append(AdjacencyMatrix[i,j]);
+                if (j < Size - 1) builder.Append(' ');
+            }
+            builder.AppendLine();
+        }
+
+        return builder.ToString();
+    }
 }
