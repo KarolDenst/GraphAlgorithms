@@ -60,10 +60,10 @@ void PrintResult(Graph graph1, Graph graph2)
     Console.WriteLine();
 }
 
-static List<T[]> GetKCombs<T>(IEnumerable<T> list, int length) where T : IComparable
-{
-    if (length == 1) return list.Select(t => new T[] { t }).ToList();
-    return GetKCombs(list, length - 1)
-        .SelectMany(t => list.Where(o => o.CompareTo(t.Last()) > 0),
-            (t1, t2) => t1.Concat(new T[] { t2 }).ToArray()).ToList();
-}
+graph1 = new Graph(2);
+graph1.AddEdge(0, 1);
+graph2 = new Graph(3);
+graph2.AddBothSidesEdge(0, 1);
+graph2.AddEdge(0, 2);
+var result = ModularProduct.Calculate(graph1, graph2);
+Console.WriteLine();
