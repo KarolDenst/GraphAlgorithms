@@ -54,6 +54,11 @@ public class Graph
         return false;
     }
     
+    /// <summary>
+    /// Returns neighbors in order of their indices.
+    /// </summary>
+    /// <param name="vertex"></param>
+    /// <returns></returns>
     public IEnumerable<int> GetNeighbors(int vertex)
     {
         for (int i = 0; i < Size; i++)

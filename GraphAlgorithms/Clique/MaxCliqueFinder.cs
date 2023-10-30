@@ -1,6 +1,19 @@
+using GraphAlgorithms.Comparers;
+
 namespace GraphAlgorithms.Clique;
 
-// TODO add source for this algorithm
+/// <summary>
+/// The MaxCliqueFinder class finds the maximum clique in a graph.
+/// It uses the algorithm described in this paper https://www.internetmathematicsjournal.com/article/1586.
+/// The algorithm is also slightly modified to return a list of vertices not just the number.
+/// Also it's modified to treat a single vertex as a clique.
+/// There are naming changes to keep up with the naming convention of the rest of the project.
+/// Here is the change list:
+/// U -> availableVertices
+/// N'(u) -> neighbors
+/// d(v) -> _degrees[v]
+/// max -> _maxSize
+/// </summary>
 public class MaxCliqueFinder
 {
     private readonly Graph _graph;
@@ -8,8 +21,12 @@ public class MaxCliqueFinder
     private readonly int[] _degrees;
     
     private List<int> _maxClique = new();
+
+    private readonly ISizeComparer _comparer;
+
+    private object _maxSize;
     
-    public MaxCliqueFinder(Graph graph)
+    private MaxCliqueFinder(Graph graph, ISizeComparer sizeComparer)
     {
         _graph = graph;
         _degrees = new int[graph.Size];
@@ -17,15 +34,18 @@ public class MaxCliqueFinder
         {
             _degrees[i] = graph.GetDegree(i);
         }
+        
+        _comparer = sizeComparer;
+        _maxSize = _comparer.GetSize(new List<int>());
     }
 
-    public static List<int> FindHeuristic(Graph graph)
+    public static List<int> FindHeuristic(Graph graph, ISizeComparer sizeComparer)
     {
-        var finder = new MaxCliqueFinder(graph);
+        var finder = new MaxCliqueFinder(graph, sizeComparer);
         return finder.FindHeuristic();
     }
     
-    public List<int> FindHeuristic()
+    private List<int> FindHeuristic()
     {
         if (_graph.Size == 0)
             return new List<int>();
@@ -34,48 +54,50 @@ public class MaxCliqueFinder
         {
             if (_degrees[i] >= _maxClique.Count)
             {
-                var U = new List<int>();
+                var availableVertices = new List<int>();
                 foreach (var v in _graph.GetNeighbors(i))
                 {
                     if (_degrees[v] >= _maxClique.Count)
                     {
-                        U.Add(v);
+                        availableVertices.Add(v);
                     }
                 }
-                CliqueHeuristic(U, new List<int>(){i});
+                CliqueHeuristic(availableVertices, new List<int> {i});
             }
         }
 
         if (_maxClique.Count == 0)
-            return new List<int>() { 0 };
+            return new List<int> { 0 };
+        _maxClique.Sort();
         return _maxClique;
     }
 
-    private void CliqueHeuristic(List<int> U, List<int> clique)
+    private void CliqueHeuristic(List<int> availableVertices, List<int> clique)
     {
-        if (U.Count == 0)
+        if (availableVertices.Count == 0)
         {
-            if (clique.Count > _maxClique.Count)
+            if (_comparer.Compare(clique, _maxSize) > 0)
             {
                 _maxClique = clique;
+                _maxSize = _comparer.GetSize(clique);
             }
 
             return;
         }
 
-        int u = GetMaxDegreeVertex(U);
-        U.Remove(u);
-        var neighbors = GetN(u);
+        int u = GetMaxDegreeVertex(availableVertices);
+        availableVertices.Remove(u);
+        var neighbors = GetNeighbors(u);
         clique.Add(u);
         
-        CliqueHeuristic(GetSum(U, neighbors), clique);
+        CliqueHeuristic(GetUnion(availableVertices, neighbors), clique);
     }
     
-    private int GetMaxDegreeVertex(List<int> U)
+    private int GetMaxDegreeVertex(List<int> availableVertices)
     {
         int max = 0;
         int maxVertex = 0;
-        foreach (var vertex in U)
+        foreach (var vertex in availableVertices)
         {
             if (_degrees[vertex] > max)
             {
@@ -87,13 +109,13 @@ public class MaxCliqueFinder
         return maxVertex;
     }
     
-    public static List<int> FindExact(Graph graph)
+    public static List<int> FindExact(Graph graph, ISizeComparer sizeComparer)
     {
-        var finder = new MaxCliqueFinder(graph);
+        var finder = new MaxCliqueFinder(graph, sizeComparer);
         return finder.FindExact();
     }
 
-    public List<int> FindExact()
+    private List<int> FindExact()
     {
         if (_graph.Size == 0)
             return new List<int>();
@@ -102,55 +124,57 @@ public class MaxCliqueFinder
         {
             if (_degrees[i] >= _maxClique.Count)
             {
-                var U = new List<int>();
+                var availableVertices = new List<int>();
                 foreach (var v in _graph.GetNeighbors(i))
                 {
                     if (v > i)
                     {
                         if (_degrees[v] >= _maxClique.Count)
                         {
-                            U.Add(v);
+                            availableVertices.Add(v);
                         }
                     }
                 }
 
-                CliqueExact(U, new List<int>() { i });
+                CliqueExact(availableVertices, new List<int> { i });
             }
         }
 
         if (_maxClique.Count == 0)
-            return new List<int>() { 0 };
+            return new List<int> { 0 };
+        _maxClique.Sort();
         return _maxClique;
     }
 
-    private void CliqueExact(List<int> U, List<int> clique)
+    private void CliqueExact(List<int> availableVertices, List<int> clique)
     {
-        if (U.Count == 0)
+        if (availableVertices.Count == 0)
         {
-            if (clique.Count > _maxClique.Count)
+            if (_comparer.Compare(clique, _maxSize) > 0)
             {
                 _maxClique = new List<int>(clique);
+                _maxSize = _comparer.GetSize(clique);
             }
 
             return;
         }
 
-        while (U.Count > 0)
+        while (availableVertices.Count > 0)
         {
-            if (clique.Count + U.Count <= _maxClique.Count)
+            if (clique.Count + availableVertices.Count <= _maxClique.Count)
                 return;
 
-            var u = U[0];
-            U.Remove(u);
-            var neighbors = GetN(u);
+            var u = availableVertices[0];
+            availableVertices.Remove(u);
+            var neighbors = GetNeighbors(u);
             
             clique.Add(u);
-            CliqueExact(GetSum(U, neighbors), clique);
+            CliqueExact(GetUnion(availableVertices, neighbors), clique);
             clique.Remove(u);
         }
     }
 
-    private List<int> GetN(int u)
+    private List<int> GetNeighbors(int u)
     {
         List<int> neighbors = new List<int>();
         foreach (var w in _graph.GetNeighbors(u))
@@ -164,18 +188,30 @@ public class MaxCliqueFinder
         return neighbors;
     }
     
-    // Could be optimized if we knew that both are sorted. Which I think is the case
-    private List<int> GetSum(List<int> U, List<int> N)
+    // This method uses the fact that both sets are sorted. The algorithm breaks if they are not sorted.
+    private List<int> GetUnion(List<int> set1, List<int> set2)
     {
-        List<int> sum = new List<int>();
-        foreach (var vertex in U)
+        var union = new List<int>();
+        int i = 0;
+        int j = 0;
+        while (i < set1.Count && j < set2.Count)
         {
-            if (N.Contains(vertex))
+            if (j == set2.Count || set1[i] < set2[j])
             {
-                sum.Add(vertex);
+                i++;
+            }
+            else if (i == set1.Count || set1[i] > set2[j])
+            {
+                j++;
+            }
+            else
+            {
+                union.Add(set1[i]);
+                i++;
+                j++;
             }
         }
-
-        return sum;
+        
+        return union;
     }
 }

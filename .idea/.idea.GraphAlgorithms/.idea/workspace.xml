@@ -8,9 +8,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b0b83220-2153-4098-8080-a3614546336a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/GraphAlgorithms/Clique/MaxCliqueFinder.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GraphAlgorithms/Comparers/ISizeComparer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GraphAlgorithms/Comparers/VertexNumber/VertexNumberComparer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GraphAlgorithms/Comparers/VertexNumber/VertexNumberSize.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GraphAlgorithms/Comparers/VertexThenEdge/VertexThenEdgeComparer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GraphAlgorithms/Comparers/VertexThenEdge/VertexThenEdgeSize.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphAlgorithms/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphAlgorithms/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphAlgorithms/Clique/MaxCliqueHeuristicFinder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphAlgorithms/Clique/MaxCliqueFinder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphAlgorithms/Clique/MaxCliqueFinder.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphAlgorithms/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphAlgorithms/Graph.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphAlgorithms/GraphAlgorithms.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GraphAlgorithms/GraphAlgorithms.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphAlgorithms/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphAlgorithms/Program.cs" afterDir="false" />
@@ -26,11 +30,9 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/ca649f91d7744c159d134bddb2f987e35e00/8b/199cdbc1/02000010pdb2Low.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7fe8f459d5e0474486f6f379e179715b7b8b0/4e/70006035/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/kdens/RiderProjects/GraphAlgorithms/GraphAlgorithms/Clique/MaxCliqueFinder.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -80,38 +82,5 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <condition expression="i == 4" language="C#" />
-          <url>file://$PROJECT_DIR$/GraphAlgorithms/Program.cs</url>
-          <line>12</line>
-          <properties documentPath="C:\Users\kdens\RiderProjects\GraphAlgorithms\GraphAlgorithms\Program.cs" initialLine="12" containingFunctionPresentation="">
-            <startOffsets>
-              <option value="362" />
-            </startOffsets>
-            <endOffsets>
-              <option value="396" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/GraphAlgorithms/Program.cs</url>
-          <line>27</line>
-          <properties documentPath="C:\Users\kdens\RiderProjects\GraphAlgorithms\GraphAlgorithms\Program.cs" initialLine="27" containingFunctionPresentation="">
-            <startOffsets>
-              <option value="883" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1014" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
