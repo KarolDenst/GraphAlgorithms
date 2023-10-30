@@ -3,12 +3,12 @@ namespace GraphAlgorithms.Comparers.VertexThenEdge;
 public class VertexThenEdgeComparer : ISizeComparer
 {
     private readonly Graph _graph;
-    
+
     public VertexThenEdgeComparer(Graph graph)
     {
         _graph = graph;
     }
-    
+
     public int Compare(List<int> vertices1, List<int> vertices2)
     {
         var size1 = GetSize(vertices1) as VertexThenEdgeSize;
@@ -25,7 +25,7 @@ public class VertexThenEdgeComparer : ISizeComparer
     public object GetSize(List<int> vertices)
     {
         int vertexCount = vertices.Count;
-        
+
         int edgeCount = 0;
         foreach (var v in vertices)
         {

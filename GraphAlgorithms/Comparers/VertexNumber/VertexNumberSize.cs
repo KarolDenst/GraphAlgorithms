@@ -1,9 +1,9 @@
-namespace GraphAlgorithms.Comparers;
+namespace GraphAlgorithms.Comparers.VertexNumber;
 
 public class VertexNumberSize : IComparable
 {
     private readonly int _size;
-    
+
     public VertexNumberSize(int size)
     {
         _size = size;
@@ -16,7 +16,7 @@ public class VertexNumberSize : IComparable
 
         if (obj is VertexNumberSize otherTemperature)
             return _size.CompareTo(otherTemperature._size);
-        
+
         throw new ArgumentException("Object is not a VertexNumberSize");
     }
 }

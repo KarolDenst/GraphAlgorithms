@@ -11,31 +11,31 @@ public class Graph
     public Graph(int size)
     {
         Size = size;
-        AdjacencyMatrix = new int[size,size];
+        AdjacencyMatrix = new int[size, size];
     }
-    
-    public void AddEdge(int from, int to) => AdjacencyMatrix[from,to] += 1;
+
+    public void AddEdge(int from, int to) => AdjacencyMatrix[from, to] += 1;
 
     public void AddBothSidesEdge(int u, int v)
     {
-        AdjacencyMatrix[u,v] += 1;
-        AdjacencyMatrix[v,u] += 1;
+        AdjacencyMatrix[u, v] += 1;
+        AdjacencyMatrix[v, u] += 1;
     }
-    
-    public void SetNumberOfEdges(int from, int to, int value) => AdjacencyMatrix[from,to] = value;
-    
-    public int GetNumberOfEdges(int from, int to) => AdjacencyMatrix[from,to];
+
+    public void SetNumberOfEdges(int from, int to, int value) => AdjacencyMatrix[from, to] = value;
+
+    public int GetNumberOfEdges(int from, int to) => AdjacencyMatrix[from, to];
 
     public int GetNumberOfEdges()
     {
         int numOfEdges = 0;
-        foreach(var val in AdjacencyMatrix)
+        foreach (var val in AdjacencyMatrix)
         {
-                numOfEdges += val;
+            numOfEdges += val;
         }
         return numOfEdges;
     }
-    
+
     public int GetDegree(int vertex)
     {
         int degree = 0;
@@ -46,14 +46,14 @@ public class Graph
         }
         return degree;
     }
-    
+
     public bool AreNeighborsInBothDirections(int vertex1, int vertex2)
     {
-        if (AdjacencyMatrix[vertex1,vertex2] != 0 && AdjacencyMatrix[vertex2,vertex1] != 0)
+        if (AdjacencyMatrix[vertex1, vertex2] != 0 && AdjacencyMatrix[vertex2, vertex1] != 0)
             return true;
         return false;
     }
-    
+
     /// <summary>
     /// Returns neighbors in order of their indices.
     /// </summary>
@@ -69,23 +69,23 @@ public class Graph
             }
         }
     }
-    
+
     public IEnumerable<int> GetOutVertices(int vertex)
     {
         for (int i = 0; i < Size; i++)
         {
-            if (AdjacencyMatrix[vertex,i] > 0)
+            if (AdjacencyMatrix[vertex, i] > 0)
             {
                 yield return i;
             }
         }
     }
-    
+
     public IEnumerable<int> GetInVertices(int vertex)
     {
         for (int i = 0; i < Size; i++)
         {
-            if (AdjacencyMatrix[i,vertex] > 0)
+            if (AdjacencyMatrix[i, vertex] > 0)
             {
                 yield return i;
             }
@@ -101,11 +101,11 @@ public class Graph
             return false;
 
         int size = graph1.Size;
-        for(int i = 0; i < size; ++i)
+        for (int i = 0; i < size; ++i)
         {
-            for(int j = 0; j < size; ++j)
+            for (int j = 0; j < size; ++j)
             {
-                if (graph1.AdjacencyMatrix[i,j] != graph2.AdjacencyMatrix[i,j])
+                if (graph1.AdjacencyMatrix[i, j] != graph2.AdjacencyMatrix[i, j])
                     return false;
             }
         }
@@ -140,12 +140,12 @@ public class Graph
             string[] line = reader.ReadLine()!.Split(' ');
             for (int j = 0; j < size; j++)
             {
-                graph.AdjacencyMatrix[i,j] = int.Parse(line[j]);
+                graph.AdjacencyMatrix[i, j] = int.Parse(line[j]);
             }
         }
         return graph;
     }
-    
+
     public void Save(string fileName)
     {
         using StreamWriter writer = new StreamWriter(fileName);
@@ -155,7 +155,7 @@ public class Graph
         {
             for (int j = 0; j < Size; j++)
             {
-                writer.Write(AdjacencyMatrix[i,j]);
+                writer.Write(AdjacencyMatrix[i, j]);
                 if (j < Size - 1) writer.Write(' ');
             }
             writer.WriteLine();
@@ -169,7 +169,7 @@ public class Graph
         {
             for (int j = 0; j < Size; j++)
             {
-                builder.Append(AdjacencyMatrix[i,j]);
+                builder.Append(AdjacencyMatrix[i, j]);
                 if (j < Size - 1) builder.Append(' ');
             }
             builder.AppendLine();
@@ -186,7 +186,7 @@ public class Graph
             for (int j = 0; j < Size; j++)
             {
                 if (indices.Contains(i) && indices.Contains(j))
-                    builder.Append(AdjacencyMatrix[i,j]);
+                    builder.Append(AdjacencyMatrix[i, j]);
                 if (j < Size - 1) builder.Append(' ');
             }
             builder.AppendLine();
