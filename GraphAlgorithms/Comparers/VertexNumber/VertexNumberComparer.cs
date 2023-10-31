@@ -2,8 +2,6 @@ namespace GraphAlgorithms.Comparers.VertexNumber;
 
 public class VertexNumberComparer : ISizeComparer<VertexNumberSize>
 {
-    public VertexNumberComparer() { }
-
     public int Compare(List<int> vertices1, List<int> vertices2)
     {
         var size1 = GetSize(vertices1);
