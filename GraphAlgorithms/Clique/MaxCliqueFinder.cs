@@ -85,28 +85,30 @@ public class MaxCliqueFinder<TCliqueSize>
             return;
         }
 
-        int u = GetMaxDegreeVertex(availableVertices);
-        availableVertices.Remove(u);
+        int index = GetMaxDegreeVertexIndex(availableVertices);
+        int u = availableVertices[index];
+        availableVertices.RemoveAt(index);
         var neighbors = GetNeighbors(u);
         clique.Add(u);
 
-        CliqueHeuristic(GetUnion(availableVertices, neighbors), clique);
+        CliqueHeuristic(GetIntersection(availableVertices, neighbors), clique);
     }
 
-    private int GetMaxDegreeVertex(List<int> availableVertices)
+    private int GetMaxDegreeVertexIndex(List<int> availableVertices)
     {
         int max = 0;
-        int maxVertex = 0;
-        foreach (var vertex in availableVertices)
+        int maxIndex = 0;
+
+        for (int i = 0; i < availableVertices.Count; i++)
         {
-            if (_degrees[vertex] > max)
+            if (_degrees[availableVertices[i]] > max)
             {
-                max = _degrees[vertex];
-                maxVertex = vertex;
+                max = _degrees[availableVertices[i]];
+                maxIndex = i;
             }
         }
 
-        return maxVertex;
+        return maxIndex;
     }
 
     public static List<int> FindExact(Graph graph, ISizeComparer<TCliqueSize> sizeComparer)
@@ -164,12 +166,12 @@ public class MaxCliqueFinder<TCliqueSize>
             if (clique.Count + availableVertices.Count <= _maxClique.Count)
                 return;
 
-            var u = availableVertices[0];
-            availableVertices.Remove(u);
+            var u = availableVertices[availableVertices.Count - 1];
+            availableVertices.RemoveAt(availableVertices.Count - 1);
             var neighbors = GetNeighbors(u);
 
             clique.Add(u);
-            CliqueExact(GetUnion(availableVertices, neighbors), clique);
+            CliqueExact(GetIntersection(availableVertices, neighbors), clique);
             clique.Remove(u);
         }
     }
@@ -189,7 +191,7 @@ public class MaxCliqueFinder<TCliqueSize>
     }
 
     // This method uses the fact that both sets are sorted. The algorithm breaks if they are not sorted.
-    private List<int> GetUnion(List<int> set1, List<int> set2)
+    private List<int> GetIntersection(List<int> set1, List<int> set2)
     {
         var union = new List<int>();
         int i = 0;

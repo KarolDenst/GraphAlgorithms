@@ -55,7 +55,7 @@ public class Graph
     }
 
     /// <summary>
-    /// Returns neighbors in order of their indices.
+    /// Returns neighbors in order of their indices ascending.
     /// </summary>
     /// <param name="vertex"></param>
     /// <returns></returns>
