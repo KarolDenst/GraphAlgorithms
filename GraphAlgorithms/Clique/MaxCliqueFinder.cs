@@ -14,7 +14,7 @@ namespace GraphAlgorithms.Clique;
 /// d(v) -> _degrees[v]
 /// max -> _maxSize
 /// </summary>
-public class MaxCliqueFinder
+public class MaxCliqueFinder<TCliqueSize>
 {
     private readonly Graph _graph;
 
@@ -22,11 +22,11 @@ public class MaxCliqueFinder
 
     private List<int> _maxClique = new();
 
-    private readonly ISizeComparer _comparer;
+    private readonly ISizeComparer<TCliqueSize> _comparer;
 
-    private object _maxSize;
+    private TCliqueSize _maxSize;
 
-    private MaxCliqueFinder(Graph graph, ISizeComparer sizeComparer)
+    private MaxCliqueFinder(Graph graph, ISizeComparer<TCliqueSize> sizeComparer)
     {
         _graph = graph;
         _degrees = new int[graph.Size];
@@ -39,9 +39,9 @@ public class MaxCliqueFinder
         _maxSize = _comparer.GetSize(new List<int>());
     }
 
-    public static List<int> FindHeuristic(Graph graph, ISizeComparer sizeComparer)
+    public static List<int> FindHeuristic(Graph graph, ISizeComparer<TCliqueSize> sizeComparer)
     {
-        var finder = new MaxCliqueFinder(graph, sizeComparer);
+        var finder = new MaxCliqueFinder<TCliqueSize>(graph, sizeComparer);
         return finder.FindHeuristic();
     }
 
@@ -109,9 +109,9 @@ public class MaxCliqueFinder
         return maxVertex;
     }
 
-    public static List<int> FindExact(Graph graph, ISizeComparer sizeComparer)
+    public static List<int> FindExact(Graph graph, ISizeComparer<TCliqueSize> sizeComparer)
     {
-        var finder = new MaxCliqueFinder(graph, sizeComparer);
+        var finder = new MaxCliqueFinder<TCliqueSize>(graph, sizeComparer);
         return finder.FindExact();
     }
 

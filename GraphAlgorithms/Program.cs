@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using GraphAlgorithms;
+﻿using GraphAlgorithms;
 using GraphAlgorithms.Clique;
 using GraphAlgorithms.Comparers.VertexThenEdge;
+using System.Diagnostics;
 
 int graphSize = 20;
 int iterations = 100;
@@ -20,18 +20,18 @@ for (int i = 0; i < iterations; i++)
 
     nonHeuristicStopwatch.Start();
     var nonHeuristicSizeComparer = new VertexThenEdgeComparer(graph);
-    var nonHeuristicClique = MaxCliqueFinder.FindExact(graph, nonHeuristicSizeComparer);
+    var nonHeuristicClique = MaxCliqueFinder<VertexThenEdgeSize>.FindExact(graph, nonHeuristicSizeComparer);
     nonHeuristicStopwatch.Stop();
 
     heuristicStopwatch.Start();
     var heuristicSizeComparer = new VertexThenEdgeComparer(graph);
-    var heuristicClique = MaxCliqueFinder.FindHeuristic(graph, heuristicSizeComparer);
+    var heuristicClique = MaxCliqueFinder<VertexThenEdgeSize>.FindHeuristic(graph, heuristicSizeComparer);
     heuristicStopwatch.Stop();
 
     Console.WriteLine($"{i}) Naive: {maxClique.Count}, non-Heuristic: {nonHeuristicClique.Count}, Heuristic: {heuristicClique.Count}");
-    Console.WriteLine($"Naive found: {String.Join(", ", maxClique)}");
-    Console.WriteLine($"non-Heuristic found: {String.Join(", ", nonHeuristicClique)}");
-    Console.WriteLine($"Heuristic found: {String.Join(", ", heuristicClique)}");
+    Console.WriteLine($"Naive found: {string.Join(", ", maxClique)}");
+    Console.WriteLine($"non-Heuristic found: {string.Join(", ", nonHeuristicClique)}");
+    Console.WriteLine($"Heuristic found: {string.Join(", ", heuristicClique)}");
 
     if (maxClique.Count != nonHeuristicClique.Count)
     {
