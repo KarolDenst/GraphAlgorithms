@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using GraphAlgorithms;
+using GraphAlgorithms.Clique;
+using GraphAlgorithms.Comparers.VertexThenEdge;
+using System.Diagnostics;
 
 int graphSize = 20;
 int iterations = 100;

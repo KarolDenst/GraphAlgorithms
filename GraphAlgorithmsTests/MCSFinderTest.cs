@@ -1,4 +1,5 @@
 ﻿using GraphAlgorithms;
+using GraphAlgorithms.Clique;
 using NUnit.Framework;
 
 namespace GraphAlgorithmsTests
