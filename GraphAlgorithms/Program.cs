@@ -1,69 +1,62 @@
 ﻿using GraphAlgorithms;
+using GraphAlgorithms.Clique;
+using GraphAlgorithms.Comparers.VertexThenEdge;
+using System.Diagnostics;
 
-// example from here https://arxiv.org/pdf/1908.06418.pdf
-var graph1 = new Graph(5);
-graph1.AdjacencyMatrix = new int[,]
+int graphSize = 20;
+int iterations = 100;
+Random random = new Random(0);
+Stopwatch naiveStopwatch = new Stopwatch();
+Stopwatch heuristicStopwatch = new Stopwatch();
+Stopwatch nonHeuristicStopwatch = new Stopwatch();
+for (int i = 0; i < iterations; i++)
 {
-    { 0, 0, 0, 1, 1 },
-    { 0,0,1,0,1 },
-    { 0,1,0,0,1 },
-    { 1,0,0,0,0 },
-    { 1,1,1,0,0 }
-};
+    var density = random.NextDouble();
+    Graph graph = GraphFactory.CreateRandom(graphSize, (int)(graphSize * (graphSize - 1) * density), i);
 
-var graph2 = new Graph(6);
-graph2.AdjacencyMatrix = new int[,]
-{
-    {0,1,0,0,1,0 },
-    {1,0,0,1,0,1 },
-    {0,0,0,1,0,1 },
-    {0,1,1,0,0,1 },
-    {1,0,0,0,0,1 },
-    {0,1,1,1,1,0 }
-};
+    naiveStopwatch.Start();
+    var maxClique = MaxCliqueNaiveFinder.Find(graph);
+    maxClique.Sort();
+    naiveStopwatch.Stop();
 
-PrintResult(graph1, graph2);
+    nonHeuristicStopwatch.Start();
+    var nonHeuristicSizeComparer = new VertexThenEdgeComparer(graph);
+    var nonHeuristicClique = MaxCliqueFinder<VertexThenEdgeSize>.FindExact(graph, nonHeuristicSizeComparer);
+    nonHeuristicClique.Sort();
+    nonHeuristicStopwatch.Stop();
 
-graph1 = new Graph(5);
-graph1.AdjacencyMatrix = new[,]
-{
-    {0, 1, 0, 0, 1 },
-    {1, 0, 1, 0, 0 },
-    {0, 1, 0, 1, 1 },
-    {0, 0, 1, 0, 1 },
-    {1, 0, 1, 1, 0 }
-};
-graph2 = new Graph(6);
-graph2.AdjacencyMatrix = new[,]
-{
-    {0, 0, 0, 0, 1, 1 },
-    {0, 0, 1, 0, 0, 0 },
-    {0, 1, 0, 1, 0, 1 },
-    {0, 0, 1, 0, 1, 1 },
-    {1, 0, 0, 1, 0, 0 },
-    {1, 0, 1, 1, 0, 0 },
-};
+    heuristicStopwatch.Start();
+    var heuristicSizeComparer = new VertexThenEdgeComparer(graph);
+    var heuristicClique = MaxCliqueFinder<VertexThenEdgeSize>.FindHeuristic(graph, heuristicSizeComparer);
+    heuristicClique.Sort();
+    heuristicStopwatch.Stop();
 
-PrintResult(graph1, graph2);
+    Console.WriteLine($"{i}) Naive: {maxClique.Count}, non-Heuristic: {nonHeuristicClique.Count}, Heuristic: {heuristicClique.Count}");
+    Console.WriteLine($"Naive found: {string.Join(", ", maxClique)}");
+    Console.WriteLine($"non-Heuristic found: {string.Join(", ", nonHeuristicClique)}");
+    Console.WriteLine($"Heuristic found: {string.Join(", ", heuristicClique)}");
 
-void PrintResult(Graph graph1, Graph graph2)
-{
-    var result = MCSNaiveFinder.Find(graph1, graph2);
+    if (maxClique.Count != nonHeuristicClique.Count)
+    {
+        Console.WriteLine("==============================================");
+        Console.WriteLine("Exact algorithms have different results");
+        Console.WriteLine("==============================================");
+    }
 
-    Console.WriteLine("Graph 1");
-    foreach (var i in result.Item1)
-        Console.Write(i + " ");
+    if (maxClique.Count != heuristicClique.Count)
+    {
+        Console.WriteLine($"Warning. The graph sizes are different");
+    }
 
-    Console.WriteLine("\nGraph 2");
-    foreach (var i in result.Item2)
-        Console.Write(i + " ");
-    Console.WriteLine();
+    if (Math.Abs(maxClique.Count - heuristicClique.Count) > 1)
+    {
+        Console.WriteLine($"Warning!!!!! The graph sizes are very different!");
+        Console.WriteLine(graph.ToString());
+    }
 }
-
-static List<T[]> GetKCombs<T>(IEnumerable<T> list, int length) where T : IComparable
-{
-    if (length == 1) return list.Select(t => new T[] { t }).ToList();
-    return GetKCombs(list, length - 1)
-        .SelectMany(t => list.Where(o => o.CompareTo(t.Last()) > 0),
-            (t1, t2) => t1.Concat(new T[] { t2 }).ToArray()).ToList();
-}
+Console.WriteLine("==============================================");
+Console.WriteLine("                Time Comparison               ");
+Console.WriteLine("==============================================");
+Console.WriteLine($"Exact time: {naiveStopwatch.ElapsedMilliseconds} ms");
+Console.WriteLine($"non-Heuristic time: {nonHeuristicStopwatch.ElapsedMilliseconds} ms");
+Console.WriteLine($"Heuristic time: {heuristicStopwatch.ElapsedMilliseconds} ms");
