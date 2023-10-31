@@ -6,7 +6,7 @@ public static class GraphFactory
     {
         return new Graph(size);
     }
-    
+
     public static Graph CreateClique(int size)
     {
         Graph graph = new Graph(size);
@@ -44,7 +44,7 @@ public static class GraphFactory
     {
         var random = new Random(seed);
         var graph = new Graph(size);
-        
+
         var indices = new List<int>();
         var indicesHashSet = new HashSet<int>();
 
@@ -56,7 +56,7 @@ public static class GraphFactory
                 indices.Add(num);
             }
         }
-        
+
         for (int i = 0; i < cliqueSize; i++)
         {
             for (int j = 0; j < cliqueSize; j++)

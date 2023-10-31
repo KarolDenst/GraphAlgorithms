@@ -1,4 +1,4 @@
-﻿namespace GraphAlgorithms;
+﻿namespace GraphAlgorithms.Clique;
 
 public static class LargestCliqueApproximator
 {
@@ -12,7 +12,7 @@ public static class LargestCliqueApproximator
 
         var aliveVertices = Enumerable.Range(0, graph.Size).ToList();
         aliveVertices.Sort((u, v) => CompareVertices(u, v, vertexDegrees));
-        
+
         while (aliveVertices.Count > 1)
         {
             if (IsCliqueApproximation(aliveVertices, vertexDegrees)) break;
