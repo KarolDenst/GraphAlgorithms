@@ -68,7 +68,6 @@ public class MaxCliqueFinder<TCliqueSize>
 
         if (_maxClique.Count == 0)
             return new List<int> { 0 };
-        _maxClique.Sort();
         return _maxClique;
     }
 
@@ -88,7 +87,7 @@ public class MaxCliqueFinder<TCliqueSize>
         int index = GetMaxDegreeVertexIndex(availableVertices);
         int u = availableVertices[index];
         availableVertices.RemoveAt(index);
-        var neighbors = GetNeighbors(u);
+        var neighbors = GetLargeNeighbors(u);
         clique.Add(u);
 
         CliqueHeuristic(GetIntersection(availableVertices, neighbors), clique);
@@ -144,7 +143,6 @@ public class MaxCliqueFinder<TCliqueSize>
 
         if (_maxClique.Count == 0)
             return new List<int> { 0 };
-        _maxClique.Sort();
         return _maxClique;
     }
 
@@ -168,7 +166,7 @@ public class MaxCliqueFinder<TCliqueSize>
 
             var u = availableVertices[availableVertices.Count - 1];
             availableVertices.RemoveAt(availableVertices.Count - 1);
-            var neighbors = GetNeighbors(u);
+            var neighbors = GetLargeNeighbors(u);
 
             clique.Add(u);
             CliqueExact(GetIntersection(availableVertices, neighbors), clique);
@@ -176,7 +174,7 @@ public class MaxCliqueFinder<TCliqueSize>
         }
     }
 
-    private List<int> GetNeighbors(int u)
+    private List<int> GetLargeNeighbors(int u)
     {
         List<int> neighbors = new List<int>();
         foreach (var w in _graph.GetNeighbors(u))

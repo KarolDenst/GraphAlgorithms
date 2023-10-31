@@ -16,16 +16,19 @@ for (int i = 0; i < iterations; i++)
 
     naiveStopwatch.Start();
     var maxClique = MaxCliqueNaiveFinder.Find(graph);
+    maxClique.Sort();
     naiveStopwatch.Stop();
 
     nonHeuristicStopwatch.Start();
     var nonHeuristicSizeComparer = new VertexThenEdgeComparer(graph);
     var nonHeuristicClique = MaxCliqueFinder<VertexThenEdgeSize>.FindExact(graph, nonHeuristicSizeComparer);
+    nonHeuristicClique.Sort();
     nonHeuristicStopwatch.Stop();
 
     heuristicStopwatch.Start();
     var heuristicSizeComparer = new VertexThenEdgeComparer(graph);
     var heuristicClique = MaxCliqueFinder<VertexThenEdgeSize>.FindHeuristic(graph, heuristicSizeComparer);
+    heuristicClique.Sort();
     heuristicStopwatch.Stop();
 
     Console.WriteLine($"{i}) Naive: {maxClique.Count}, non-Heuristic: {nonHeuristicClique.Count}, Heuristic: {heuristicClique.Count}");
