@@ -1,6 +1,6 @@
 namespace GraphAlgorithms.Comparers.VertexNumber;
 
-public class VertexNumberSize : IComparable
+public class VertexNumberSize : IComparable<VertexNumberSize>
 {
     private readonly int _size;
 
@@ -9,14 +9,11 @@ public class VertexNumberSize : IComparable
         _size = size;
     }
 
-    public int CompareTo(object? obj)
+    public int CompareTo(VertexNumberSize? obj)
     {
         if (obj == null)
             throw new ArgumentException("Object is null");
 
-        if (obj is VertexNumberSize otherTemperature)
-            return _size.CompareTo(otherTemperature._size);
-
-        throw new ArgumentException("Object is not a VertexNumberSize");
+        return _size.CompareTo(obj._size);
     }
 }

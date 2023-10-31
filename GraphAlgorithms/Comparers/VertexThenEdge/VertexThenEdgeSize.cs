@@ -1,6 +1,6 @@
 namespace GraphAlgorithms.Comparers.VertexThenEdge;
 
-public class VertexThenEdgeSize : IComparable
+public class VertexThenEdgeSize : IComparable<VertexThenEdgeSize>
 {
     private readonly (int, int) _size;
 
@@ -9,14 +9,11 @@ public class VertexThenEdgeSize : IComparable
         _size = size;
     }
 
-    public int CompareTo(object? obj)
+    public int CompareTo(VertexThenEdgeSize? obj)
     {
         if (obj == null)
             throw new ArgumentException("Object is null");
 
-        if (obj is VertexThenEdgeSize otherTemperature)
-            return _size.CompareTo(otherTemperature._size);
-
-        throw new ArgumentException("Object is not a VertexNumberSize");
+        return _size.CompareTo(obj._size);
     }
 }

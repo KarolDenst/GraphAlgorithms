@@ -1,6 +1,6 @@
 namespace GraphAlgorithms.Comparers;
 
-public interface ISizeComparer
+public interface ISizeComparer<T>
 {
     /// <summary>
     /// Returns 1 if subgraph of vertices1 is larger than subgraph of vertices2.
@@ -20,12 +20,12 @@ public interface ISizeComparer
     /// <param name="vertices"></param>
     /// <param name="size"></param>
     /// <returns></returns>
-    int Compare(List<int> vertices, object size);
+    int Compare(List<int> vertices, T size);
 
     /// <summary>
     /// Returns the size of the subgraph.
     /// </summary>
     /// <param name="vertices"></param>
     /// <returns></returns>
-    object GetSize(List<int> vertices);
+    T GetSize(List<int> vertices);
 }
