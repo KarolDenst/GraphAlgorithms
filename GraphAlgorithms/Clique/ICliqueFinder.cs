@@ -1,4 +1,6 @@
-﻿namespace GraphAlgorithms.Clique
+﻿using GraphAlgorithms.Graphs;
+
+namespace GraphAlgorithms.Clique
 {
     public interface ICliqueFastFinder
     {

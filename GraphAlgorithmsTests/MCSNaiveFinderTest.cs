@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using GraphAlgorithms.Graphs;
+using GraphAlgorithms.MCS;
+using NUnit.Framework;
 
 namespace GraphAlgorithms.Tests
 {

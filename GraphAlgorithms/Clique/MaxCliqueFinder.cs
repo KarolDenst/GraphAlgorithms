@@ -1,4 +1,5 @@
 using GraphAlgorithms.Comparers;
+using GraphAlgorithms.Graphs;
 
 namespace GraphAlgorithms.Clique;
 
@@ -26,6 +27,18 @@ public class MaxCliqueFinder<TCliqueSize>
 
     private TCliqueSize _maxSize;
 
+    public static List<int> FindHeuristic(Graph graph, ISizeComparer<TCliqueSize> sizeComparer)
+    {
+        var finder = new MaxCliqueFinder<TCliqueSize>(graph, sizeComparer);
+        return finder.FindHeuristic();
+    }
+
+    public static List<int> FindExact(Graph graph, ISizeComparer<TCliqueSize> sizeComparer)
+    {
+        var finder = new MaxCliqueFinder<TCliqueSize>(graph, sizeComparer);
+        return finder.FindExact();
+    }
+
     private MaxCliqueFinder(Graph graph, ISizeComparer<TCliqueSize> sizeComparer)
     {
         _graph = graph;
@@ -37,12 +50,6 @@ public class MaxCliqueFinder<TCliqueSize>
 
         _comparer = sizeComparer;
         _maxSize = _comparer.GetSize(new List<int>());
-    }
-
-    public static List<int> FindHeuristic(Graph graph, ISizeComparer<TCliqueSize> sizeComparer)
-    {
-        var finder = new MaxCliqueFinder<TCliqueSize>(graph, sizeComparer);
-        return finder.FindHeuristic();
     }
 
     private List<int> FindHeuristic()
@@ -108,12 +115,6 @@ public class MaxCliqueFinder<TCliqueSize>
         }
 
         return maxIndex;
-    }
-
-    public static List<int> FindExact(Graph graph, ISizeComparer<TCliqueSize> sizeComparer)
-    {
-        var finder = new MaxCliqueFinder<TCliqueSize>(graph, sizeComparer);
-        return finder.FindExact();
     }
 
     private List<int> FindExact()

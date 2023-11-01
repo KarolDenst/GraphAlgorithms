@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace GraphAlgorithms;
+namespace GraphAlgorithms.Graphs;
 
 public class Graph
 {

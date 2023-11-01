@@ -1,4 +1,6 @@
-﻿namespace GraphAlgorithms
+﻿using GraphAlgorithms.Graphs;
+
+namespace GraphAlgorithms.MCS
 {
     public class MCSNaiveFinder
     {

@@ -1,5 +1,6 @@
 ﻿using GraphAlgorithms.Comparers.VertexNumber;
 using GraphAlgorithms.Comparers.VertexThenEdge;
+using GraphAlgorithms.Graphs;
 
 namespace GraphAlgorithms.Clique
 {

@@ -1,5 +1,6 @@
-﻿using GraphAlgorithms;
-using GraphAlgorithms.Clique;
+﻿using GraphAlgorithms.Clique;
+using GraphAlgorithms.Graphs;
+using GraphAlgorithms.MCS;
 using NUnit.Framework;
 
 using Mapping = System.Collections.Generic.HashSet<(int, int)>;

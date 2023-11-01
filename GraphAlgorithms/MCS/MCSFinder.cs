@@ -1,6 +1,8 @@
 ﻿using GraphAlgorithms.Clique;
+using GraphAlgorithms.Graphs;
+using GraphAlgorithms.Utils;
 
-namespace GraphAlgorithms
+namespace GraphAlgorithms.MCS
 {
     public class MCSFinder
     {

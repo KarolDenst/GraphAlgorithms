@@ -1,6 +1,6 @@
-﻿using GraphAlgorithms;
-using GraphAlgorithms.Clique;
+﻿using GraphAlgorithms.Clique;
 using GraphAlgorithms.Comparers.VertexThenEdge;
+using GraphAlgorithms.Graphs;
 using System.Diagnostics;
 
 int graphSize = 20;

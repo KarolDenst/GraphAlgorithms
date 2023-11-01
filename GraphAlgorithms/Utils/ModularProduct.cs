@@ -1,4 +1,6 @@
-﻿namespace GraphAlgorithms
+﻿using GraphAlgorithms.Graphs;
+
+namespace GraphAlgorithms.Utils
 {
     public static class ModularProduct
     {
@@ -49,8 +51,8 @@
                         product.AdjacencyMatrix[j, i] = 1;
                         if (includeWeights)
                         {
-                            product.AdjacencyMatrix[i, j] += (graph1.AdjacencyMatrix[u1, u2] + graph1.AdjacencyMatrix[u2, u1]);
-                            product.AdjacencyMatrix[j, i] += (graph1.AdjacencyMatrix[u1, u2] + graph1.AdjacencyMatrix[u2, u1]);
+                            product.AdjacencyMatrix[i, j] += graph1.AdjacencyMatrix[u1, u2] + graph1.AdjacencyMatrix[u2, u1];
+                            product.AdjacencyMatrix[j, i] += graph1.AdjacencyMatrix[u1, u2] + graph1.AdjacencyMatrix[u2, u1];
                         }
 
                     }
