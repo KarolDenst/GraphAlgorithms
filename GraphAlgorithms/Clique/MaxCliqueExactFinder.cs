@@ -8,16 +8,16 @@ namespace GraphAlgorithms.Clique
     {
         public List<int> FindWithEdges(Graph graph)
         {
-            var nonHeuristicSizeComparer = new VertexThenEdgeComparer(graph);
-            var nonHeuristicClique = MaxCliqueFinder<VertexThenEdgeSize>.FindExact(graph, nonHeuristicSizeComparer);
-            return nonHeuristicClique;
+            var sizeComparer = new VertexThenEdgeComparer(graph);
+            var finder = new MaxCliqueFinder<VertexThenEdgeSize>(graph, sizeComparer);
+            return finder.FindExact();
         }
 
         public List<int> Find(Graph graph)
         {
-            var nonHeuristicSizeComparer = new VertexNumberComparer();
-            var nonHeuristicClique = MaxCliqueFinder<VertexNumberSize>.FindExact(graph, nonHeuristicSizeComparer);
-            return nonHeuristicClique;
+            var sizeComparer = new VertexNumberComparer();
+            var finder = new MaxCliqueFinder<VertexNumberSize>(graph, sizeComparer);
+            return finder.FindExact();
         }
     }
 }

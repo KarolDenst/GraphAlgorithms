@@ -14,6 +14,8 @@ public class Graph
         AdjacencyMatrix = new int[size, size];
     }
 
+    public List<int> Vertices { get => Enumerable.Range(0, Size).ToList(); }
+
     public void AddEdge(int from, int to) => AdjacencyMatrix[from, to] += 1;
 
     public void AddBothSidesEdge(int u, int v)
