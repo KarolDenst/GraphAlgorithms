@@ -1,3 +1,5 @@
+using GraphAlgorithms.Graphs;
+
 namespace GraphAlgorithms.Comparers.VertexThenEdge;
 
 public class VertexThenEdgeComparer : ISizeComparer<VertexThenEdgeSize>

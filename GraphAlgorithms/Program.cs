@@ -1,6 +1,5 @@
-﻿using GraphAlgorithms;
-using GraphAlgorithms.Clique;
-using GraphAlgorithms.Comparers.VertexThenEdge;
+﻿using GraphAlgorithms.Clique;
+using GraphAlgorithms.Graphs;
 using System.Diagnostics;
 
 int graphSize = 20;
@@ -20,14 +19,14 @@ for (int i = 0; i < iterations; i++)
     naiveStopwatch.Stop();
 
     nonHeuristicStopwatch.Start();
-    var nonHeuristicSizeComparer = new VertexThenEdgeComparer(graph);
-    var nonHeuristicClique = MaxCliqueFinder<VertexThenEdgeSize>.FindExact(graph, nonHeuristicSizeComparer);
+    var nonHeuristicFinder = new MaxCliqueExactFinder();
+    var nonHeuristicClique = nonHeuristicFinder.FindWithEdges(graph);
     nonHeuristicClique.Sort();
     nonHeuristicStopwatch.Stop();
 
     heuristicStopwatch.Start();
-    var heuristicSizeComparer = new VertexThenEdgeComparer(graph);
-    var heuristicClique = MaxCliqueFinder<VertexThenEdgeSize>.FindHeuristic(graph, heuristicSizeComparer);
+    var heuristicFinder = new MaxCliqueHeuFinder();
+    var heuristicClique = heuristicFinder.FindWithEdges(graph);
     heuristicClique.Sort();
     heuristicStopwatch.Stop();
 

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace GraphAlgorithms;
+namespace GraphAlgorithms.Graphs;
 
 public class Graph
 {
@@ -13,6 +13,8 @@ public class Graph
         Size = size;
         AdjacencyMatrix = new int[size, size];
     }
+
+    public List<int> Vertices { get => Enumerable.Range(0, Size).ToList(); }
 
     public void AddEdge(int from, int to) => AdjacencyMatrix[from, to] += 1;
 

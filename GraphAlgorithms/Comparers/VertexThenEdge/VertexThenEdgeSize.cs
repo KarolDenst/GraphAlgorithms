@@ -4,6 +4,9 @@ public class VertexThenEdgeSize : IComparable<VertexThenEdgeSize>
 {
     private readonly (int, int) _size;
 
+    public static implicit operator (int, int)(VertexThenEdgeSize size)
+        => size._size;
+
     public VertexThenEdgeSize((int, int) size)
     {
         _size = size;

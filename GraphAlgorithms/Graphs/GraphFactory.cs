@@ -1,4 +1,4 @@
-﻿namespace GraphAlgorithms;
+﻿namespace GraphAlgorithms.Graphs;
 
 public static class GraphFactory
 {
