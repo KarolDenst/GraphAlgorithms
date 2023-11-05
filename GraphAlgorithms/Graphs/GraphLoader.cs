@@ -2,13 +2,13 @@
 {
     public class GraphLoader
     {
-        private int currentLine;
+        private int _currentLine;
 
-        private readonly string[] lines;
+        private readonly string[] _lines;
 
         private GraphLoader(string[] lines)
         {
-            this.lines = lines;
+            _lines = lines;
         }
 
         public static Graph[] Load(string path)
@@ -20,7 +20,7 @@
             int numberOfGraphs = int.Parse(lines[0], System.Globalization.NumberStyles.None);
             Graph[] graphs = new Graph[numberOfGraphs];
 
-            loader.currentLine = 1;
+            loader._currentLine = 1;
             for (int i = 0; i < numberOfGraphs; i++)
             {
                 graphs[i] = loader.ParseNextGraph();
@@ -31,31 +31,43 @@
 
         private Graph ParseNextGraph()
         {
-            int graphSize = int.Parse(lines[currentLine++]);
+            int graphSize = int.Parse(_lines[_currentLine++]);
             Graph graph = new Graph(graphSize);
             for (int i = 0; i < graphSize; i++)
             {
                 List<int> values;
 
-                values = lines[currentLine++]
+                values = _lines[_currentLine++]
                     .Trim()
                     .Split(' ')
                     .Select(x => int.Parse(x, System.Globalization.NumberStyles.None))
                     .ToList();
 
                 if (values.Count != graphSize)
-                {
-                    throw new ArgumentOutOfRangeException($"Invalid graph definition at ${currentLine - 1}");
-                }
+                    throw new ArgumentOutOfRangeException($"Invalid graph definition at ${_currentLine - 1}");
+
+                if (values[i] != 0)
+                    throw new ArgumentOutOfRangeException("The graph cannot have loops");
 
                 for (int j = 0; j < graphSize; j++)
                 {
+                    if (values[j] < 0)
+                        throw new ArgumentOutOfRangeException("Adjacency matrix cannot have negative values");
+
                     graph.AdjacencyMatrix[i, j] = values[j];
                 }
             }
 
-            while (currentLine < lines.Length && lines[currentLine++].Trim().Length > 0)
-                ;
+            while (_currentLine < _lines.Length
+                && _lines[_currentLine].Trim().Length > 0) // skip comments
+            {
+                _currentLine++;
+            }
+            while (_currentLine < _lines.Length
+                && _lines[_currentLine].Trim().Length == 0) // skip blank lines
+            {
+                _currentLine++;
+            }
 
             return graph;
         }

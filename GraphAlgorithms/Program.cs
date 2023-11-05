@@ -10,56 +10,109 @@ internal class Program
 
     private static void Main(string[] args)
     {
+        var rootCommand = CreateRootCommand();
+
+        rootCommand.Invoke(args);
+    }
+
+    private static Command CreateRootCommand()
+    {
         var rootCommand = new RootCommand("Collection of graph algorithms");
 
-        var dimacsCommand = new Command("dimacs", "Use DIMACS benchmark set (https://iridia.ulb.ac.be/~fmascia/maximum_clique/DIMACS-benchmark)");
         var nameOption = new Option<string>(name: "--name",
-            description: "Name of the benchmark");
-        dimacsCommand.Add(nameOption);
+            description: "Name of the benchmark")
+        { IsRequired = true };
+        nameOption.AddAlias("-n");
+
         var algorithmTypeOption = new Option<string>(name: "--type",
-            "Type of the algorithm")
-            .FromAmong("exact", "heuristic");
-        dimacsCommand.Add(algorithmTypeOption);
+           description: "Type of the algorithm")
+        { IsRequired = true }
+           .FromAmong("exact", "heuristic");
+        algorithmTypeOption.AddAlias("-t");
+
+        var fileOption = new Option<string>(name: "--file",
+           description: "Path to file with graphs")
+        { IsRequired = true };
+        fileOption.AddAlias("-f");
+
+        var indexOption = new Option<int>(name: "--index",
+            description: "Index of the graph in the file",
+            getDefaultValue: () => 0);
+        indexOption.AddAlias("-i");
+
+        var cmpOption = new Option<string>(name: "--cmp",
+            description: "Graph comparison type",
+            getDefaultValue: () => "vertices")
+            .FromAmong("vertices", "vertices-then-edges");
+
+        var index1Option = new Option<int>(name: "--index1",
+            description: "Index of the 1st graph in the file",
+            getDefaultValue: () => 0);
+        index1Option.AddAlias("-i1");
+
+        var index2Option = new Option<int>(name: "--index2",
+            description: "Index of the 2nd graph in the file",
+            getDefaultValue: () => 1);
+        index2Option.AddAlias("-i2");
+
+        var dimacsCommand = CreateDimacsCommand(nameOption, algorithmTypeOption);
+        rootCommand.Add(dimacsCommand);
+
+        var cliqueCommand = CreateCliqueCommand(fileOption, indexOption, algorithmTypeOption, cmpOption);
+        rootCommand.Add(cliqueCommand);
+
+        var subgraphCommand = CreateSubgraphCommand(fileOption, index1Option, index2Option, algorithmTypeOption, cmpOption);
+        rootCommand.Add(subgraphCommand);
+
+        return rootCommand;
+    }
+
+    private static Command CreateDimacsCommand(Option<string> nameOption, Option<string> algorithmTypeOption)
+    {
+        var dimacsCommand = new Command("dimacs", "Use DIMACS benchmark set (https://iridia.ulb.ac.be/~fmascia/maximum_clique/DIMACS-benchmark)")
+        {
+            nameOption,
+            algorithmTypeOption
+        };
         dimacsCommand.SetHandler((nameOptionValue, algTypeOptionValue) =>
         {
             if (!TryGetDatasetPath(nameOptionValue, out var pathToDataset))
                 return;
             RunTest(pathToDataset!, algTypeOptionValue);
         }, nameOption, algorithmTypeOption);
-        rootCommand.Add(dimacsCommand);
 
-        var cliqueCommand = new Command("max-clique", "Find maximum clique");
-        var fileOption = new Option<string>(name: "--file",
-            description: "Path to file with graphs");
-        var indexOption = new Option<int>(name: "--index",
-            description: "Index of the graph in the file",
-            getDefaultValue: () => 0);
-        var cmpOption = new Option<string>(name: "--cmp",
-            description: "Graph comparison type")
-            .FromAmong("vertices", "vertices-then-edges");
-        cliqueCommand.Add(fileOption);
-        cliqueCommand.Add(indexOption);
-        cliqueCommand.Add(algorithmTypeOption);
-        cliqueCommand.Add(cmpOption);
+        return dimacsCommand;
+    }
+
+    private static Command CreateCliqueCommand(Option<string> fileOption, Option<int> indexOption,
+        Option<string> algorithmTypeOption, Option<string> cmpOption)
+    {
+        var cliqueCommand = new Command("max-clique", "Find maximum clique")
+        {
+            fileOption,
+            indexOption,
+            algorithmTypeOption,
+            cmpOption
+        };
         cliqueCommand.SetHandler(RunCliqueFinder, fileOption, indexOption, algorithmTypeOption, cmpOption);
-        rootCommand.Add(cliqueCommand);
 
-        var subgraphCommand = new Command("mcs", "Find maximum common subgraph");
-        var index1Option = new Option<int>(name: "--index1",
-            description: "Index of the 1st graph in the file",
-            getDefaultValue: () => 0);
-        var index2Option = new Option<int>(name: "--index2",
-            description: "Index of the 2nd graph in the file",
-            getDefaultValue: () => 1);
-        subgraphCommand.Add(fileOption);
-        subgraphCommand.Add(index1Option);
-        subgraphCommand.Add(index2Option);
-        subgraphCommand.Add(algorithmTypeOption);
-        subgraphCommand.Add(cmpOption);
+        return cliqueCommand;
+    }
+
+    private static Command CreateSubgraphCommand(Option<string> fileOption, Option<int> index1Option,
+        Option<int> index2Option, Option<string> algorithmTypeOption, Option<string> cmpOption)
+    {
+        var subgraphCommand = new Command("mcs", "Find maximum common subgraph")
+        {
+            fileOption,
+            index1Option,
+            index2Option,
+            algorithmTypeOption,
+            cmpOption
+        };
         subgraphCommand.SetHandler(RunMCSFinder, fileOption, index1Option, index2Option, algorithmTypeOption, cmpOption);
-        rootCommand.Add(subgraphCommand);
 
-        rootCommand.Invoke(args);
+        return subgraphCommand;
     }
 
     private static bool TryGetDatasetPath(string name, out string? pathToDataset)

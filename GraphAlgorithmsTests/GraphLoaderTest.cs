@@ -13,34 +13,40 @@ namespace GraphAlgorithmsTests
 
             int graph1Size = 3;
             var graph1 = new Graph(graph1Size);
-            for (int i = 0; i < graph1Size; i++)
-            {
-                for (int j = 0; j < graph1Size; j++)
-                {
-                    graph1.AdjacencyMatrix[i, j] = i * graph1Size + j + 1;
-                }
-            }
+            FillGraphConsecutiveNoLoops(graph1);
+
             int graph2Size = 4;
             var graph2 = new Graph(graph2Size);
-            for (int i = 0; i < graph2Size; i++)
-            {
-                for (int j = 0; j < graph2Size; j++)
-                {
-                    graph2.AdjacencyMatrix[i, j] = i * graph2Size + j + 1;
-                }
-            }
+            FillGraphConsecutiveNoLoops(graph2);
+
             int graph3Size = 2;
             var graph3 = new Graph(graph3Size);
-            for (int i = 0; i < graph3Size; i++)
-            {
-                for (int j = 0; j < graph3Size; j++)
-                {
-                    graph3.AdjacencyMatrix[i, j] = i * graph3Size + j + 1;
-                }
-            }
+            FillGraphConsecutiveNoLoops(graph3);
 
             var graphs = new List<Graph> { graph1, graph2, graph3 };
             yield return new TestCaseData(path, graphs);
+        }
+
+        private static void FillGraphConsecutiveNoLoops(Graph graph)
+        {
+            for (int i = 0; i < graph.Size; i++)
+            {
+                for (int j = 0; j < graph.Size; j++)
+                {
+                    if (i == j)
+                        graph.AdjacencyMatrix[i, j] = 0;
+                    else
+                        graph.AdjacencyMatrix[i, j] = i * graph.Size + j + 1;
+                }
+            }
+        }
+
+        private static IEnumerable<TestCaseData> InvalidGraphTestCases()
+        {
+            string file = "threeGraphsLoops.txt";
+            string resourceDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
+            string path = Path.Combine(resourceDir, file);
+            yield return new TestCaseData(path);
         }
 
         [Test]
@@ -49,6 +55,13 @@ namespace GraphAlgorithmsTests
         {
             Graph[] graphs = GraphLoader.Load(path);
             Assert.That(graphs, Is.EqualTo(expectedGraphs));
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidGraphTestCases))]
+        public static void TestInvalidGraphHandling(string path)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => GraphLoader.Load(path));
         }
     }
 }
