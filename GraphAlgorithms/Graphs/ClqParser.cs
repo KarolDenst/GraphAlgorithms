@@ -32,7 +32,7 @@
             {
                 int from = edge.Item1 - minVertex;
                 int to = edge.Item2 - minVertex;
-                graph.AddBothSidesEdge(from, to); // TODO not sure if that's ok
+                graph.AddBothSidesEdge(from, to);
             }
 
             return graph;
