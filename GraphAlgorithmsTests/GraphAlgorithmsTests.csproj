@@ -21,4 +21,10 @@
     <ProjectReference Include="..\GraphAlgorithms\GraphAlgorithms.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\threeGraphs.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
