@@ -1,10 +1,11 @@
 ﻿using System.CommandLine;
 using GraphAlgorithms.Clique;
 using GraphAlgorithms.MCS;
+using GraphAlgorithms.Utils;
 
 namespace GraphAlgorithms.Commands;
 
-public static class SubgraphCommand
+public static class MetricCommand
 {
     public static Command Create()
     {
@@ -13,43 +14,40 @@ public static class SubgraphCommand
         var index1Option = OptionsFactory.CreateIndex1Option();
         var index2Option = OptionsFactory.CreateIndex2Option();
         var algorithmTypeOption = OptionsFactory.CreateAlgorithmTypeOption();
-        var cmpOption = OptionsFactory.CreateCmpOption();
 
-        var command = new Command("mcs", "Find maximum common subgraph.")
+        var command = new Command("metric", "Finds the distance between two graphs.")
         {
             fileOption,
             file2Option,
             index1Option,
             index2Option,
             algorithmTypeOption,
-            cmpOption
         };
-        command.SetHandler(Run, fileOption, file2Option, index1Option, index2Option, algorithmTypeOption, cmpOption);
+        command.SetHandler(Run, fileOption, file2Option, index1Option, index2Option, algorithmTypeOption);
 
         return command;
     }
 
-    private static void Run(string path1, string? path2, int index1, int index2, string algType, string comparison)
+    private static void Run(string path1, string? path2, int index1, int index2, string algType)
     {
         if (path2 is null)
-            RunMcsFinder(path1, path1, index1, index2, algType, comparison);
+            RunMcsFinder(path1, path1, index1, index2, algType);
         else
-            RunMcsFinder(path1, path2, index1, index2, algType, comparison);
+            RunMcsFinder(path1, path2, index1, index2, algType);
     }
 
-    private static void RunMcsFinder(string path1, string path2, int index1, int index2, string algType, string comparison)
+    private static void RunMcsFinder(string path1, string path2, int index1, int index2, string algType)
     {
         var graph1 = Utils.GetGraph(path1, index1);
         var graph2 = Utils.GetGraph(path2, index2);
 
         ICliqueFastFinder finder = GetFinder(algType);
-        bool withEdges = comparison == "vertices-then-edges";
+        bool withEdges = false;
 
         (int[] subgraph1, int[] subgraph2) = MCSFinder.FindFast(graph1, graph2, finder, withEdges);
 
-        Console.WriteLine("MCS in graph 1: " + string.Join(", ", subgraph1));
-        Console.WriteLine("MCS in graph 2: " + string.Join(", ", subgraph2));
-        Console.WriteLine($"{subgraph1.Length} vertices");
+        var metric = 1 - (double)subgraph1.Length / Math.Max(graph1.Size, graph2.Size);
+        Console.WriteLine($"Metric: {metric}.");
     }
 
     private static ICliqueFastFinder GetFinder(string algType) => algType switch

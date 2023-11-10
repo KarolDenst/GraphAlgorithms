@@ -11,8 +11,8 @@ public static class DimacsCommand
 
     public static Command Create()
     {
-        var nameOption = BasicCommandFactory.CreateNameOption();
-        var algorithmTypeOption = BasicCommandFactory.CreateAlgorithmTypeOption();
+        var nameOption = OptionsFactory.CreateNameOption();
+        var algorithmTypeOption = OptionsFactory.CreateAlgorithmTypeOption();
         var dimacsCommand = new Command("dimacs", "Use DIMACS benchmark set (https://iridia.ulb.ac.be/~fmascia/maximum_clique/DIMACS-benchmark)")
         {
             nameOption,
@@ -27,7 +27,7 @@ public static class DimacsCommand
 
         return dimacsCommand;
     }
-    
+
     private static bool TryGetDatasetPath(string name, out string? pathToDataset)
     {
         if (!name.EndsWith(".clq"))

@@ -12,7 +12,7 @@ internal class Program
 
     private static Command CreateRootCommand()
     {
-        var rootCommand = new RootCommand("Collection of graph algorithms");
+        var rootCommand = new RootCommand("Collection of graph algorithms. For information how to use each command, use <command> --help.");
 
         var dimacsCommand = DimacsCommand.Create();
         rootCommand.Add(dimacsCommand);
@@ -22,6 +22,12 @@ internal class Program
 
         var subgraphCommand = SubgraphCommand.Create();
         rootCommand.Add(subgraphCommand);
+
+        var metricCommand = MetricCommand.Create();
+        rootCommand.Add(metricCommand);
+
+        var sizeCommand = SizeCommand.Create();
+        rootCommand.Add(sizeCommand);
 
         return rootCommand;
     }
