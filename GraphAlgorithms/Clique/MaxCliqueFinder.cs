@@ -47,12 +47,12 @@ public class MaxCliqueFinder<TCliqueSize>
 
         for (int i = 0; i < _graph.Size; i++)
         {
-            if (_degrees[i] >= _maxClique.Count)
+            if (_degrees[i] >= _maxClique.Count - 1)
             {
                 var availableVertices = new List<int>();
                 foreach (var v in _graph.GetNeighbors(i))
                 {
-                    if (_degrees[v] >= _maxClique.Count)
+                    if (_degrees[v] >= _maxClique.Count - 1)
                     {
                         availableVertices.Add(v);
                     }
@@ -112,14 +112,14 @@ public class MaxCliqueFinder<TCliqueSize>
 
         for (int i = 0; i < _graph.Size; i++)
         {
-            if (_degrees[i] >= _maxClique.Count)
+            if (_degrees[i] >= _maxClique.Count - 1)
             {
                 var availableVertices = new List<int>();
                 foreach (var v in _graph.GetNeighbors(i))
                 {
                     if (v > i)
                     {
-                        if (_degrees[v] >= _maxClique.Count)
+                        if (_degrees[v] >= _maxClique.Count - 1)
                         {
                             availableVertices.Add(v);
                         }
@@ -150,7 +150,7 @@ public class MaxCliqueFinder<TCliqueSize>
 
         while (availableVertices.Count > 0)
         {
-            if (clique.Count + availableVertices.Count <= _maxClique.Count)
+            if (clique.Count + availableVertices.Count < _maxClique.Count)
                 return;
 
             var u = availableVertices[availableVertices.Count - 1];
@@ -168,7 +168,7 @@ public class MaxCliqueFinder<TCliqueSize>
         List<int> neighbors = new List<int>();
         foreach (var w in _graph.GetNeighbors(u))
         {
-            if (_degrees[w] >= _maxClique.Count)
+            if (_degrees[w] >= _maxClique.Count - 1)
             {
                 neighbors.Add(w);
             }
