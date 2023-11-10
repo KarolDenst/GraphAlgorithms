@@ -33,6 +33,7 @@ public class VertexThenEdgeComparer : ISizeComparer<VertexThenEdgeSize>
         {
             foreach (var u in vertices)
             {
+                if (u == v) continue;
                 edgeCount += _graph.GetNumberOfEdges(v, u);
             }
         }

@@ -65,6 +65,7 @@ public class Graph
     {
         for (int i = 0; i < Size; i++)
         {
+            if (i == vertex) continue;
             if (AreNeighborsInBothDirections(vertex, i))
             {
                 yield return i;
