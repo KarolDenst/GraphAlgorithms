@@ -4,7 +4,7 @@ using GraphAlgorithms.MCS;
 
 namespace GraphAlgorithms.Utils
 {
-    public class Metrics
+    public static class Metrics
     {
         public static double CalculateBasedOnMCS(Graph graph1, Graph graph2)
         {
