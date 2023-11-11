@@ -1,13 +1,33 @@
 ﻿using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
 using GraphAlgorithms.Commands;
 
-internal class Program
+namespace GraphAlgorithms;
+
+internal static class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var rootCommand = CreateRootCommand();
+        var parser = new CommandLineBuilder(rootCommand)
+            .AddMiddleware(async (context, next) =>
+            {
+                try
+                {
+                    await next(context);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    context.ExitCode = 1;
+                }
+            })
+            .UseDefaults()
+            .Build();
+        
 
-        rootCommand.Invoke(args);
+        await parser.InvokeAsync(args);
     }
 
     private static Command CreateRootCommand()
