@@ -1,7 +1,6 @@
 ﻿using System.CommandLine;
 using GraphAlgorithms.Clique;
 using GraphAlgorithms.MCS;
-using GraphAlgorithms.Utils;
 
 namespace GraphAlgorithms.Commands;
 
@@ -15,7 +14,7 @@ public static class MetricCommand
         var index2Option = OptionsFactory.CreateIndex2Option();
         var algorithmTypeOption = OptionsFactory.CreateAlgorithmTypeOption();
 
-        var command = new Command("metric", "Finds the distance between two graphs.")
+        var command = new Command("metric", "Find the distance between two graphs.")
         {
             fileOption,
             file2Option,

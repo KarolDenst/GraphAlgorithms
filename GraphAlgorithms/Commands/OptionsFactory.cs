@@ -78,7 +78,7 @@ public static class OptionsFactory
     {
         var index2Option = new Option<int>(name: "--index2",
                 description: "Index of the 2nd graph in the file",
-                getDefaultValue: () => 1);
+                getDefaultValue: () => 0);
         index2Option.AddAlias("-i2");
 
         return index2Option;

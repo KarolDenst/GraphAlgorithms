@@ -1,6 +1,5 @@
 ﻿using System.CommandLine;
 using GraphAlgorithms.Clique;
-using GraphAlgorithms.Graphs;
 
 namespace GraphAlgorithms.Commands;
 
@@ -13,7 +12,7 @@ public static class CliqueCommand
         var algorithmTypeOption = OptionsFactory.CreateAlgorithmTypeOption();
         var cmpOption = OptionsFactory.CreateCmpOption();
 
-        var command = new Command("max-clique", "Find maximum clique is a graph.")
+        var command = new Command("max-clique", "Find maximum clique in a graph.")
         {
             fileOption,
             indexOption,

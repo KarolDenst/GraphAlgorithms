@@ -28,6 +28,9 @@ internal class Program
 
         var sizeCommand = SizeCommand.Create();
         rootCommand.Add(sizeCommand);
+        
+        var graphCommand = GraphCommand.Create();
+        rootCommand.Add(graphCommand);
 
         return rootCommand;
     }
