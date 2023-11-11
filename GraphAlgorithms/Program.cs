@@ -25,7 +25,6 @@ internal static class Program
             })
             .UseDefaults()
             .Build();
-        
 
         await parser.InvokeAsync(args);
     }

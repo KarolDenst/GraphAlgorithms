@@ -13,12 +13,11 @@
 
         public static Graph[] Load(string path)
         {
-            string[] lines;
-            lines = File.ReadAllLines(path);
+            string[] lines = File.ReadAllLines(path);
 
             GraphLoader loader = new GraphLoader(lines);
             int numberOfGraphs = int.Parse(lines[0], System.Globalization.NumberStyles.None);
-            Graph[] graphs = new Graph[numberOfGraphs];
+            var graphs = new Graph[numberOfGraphs];
 
             loader._currentLine = 1;
             for (int i = 0; i < numberOfGraphs; i++)
@@ -35,9 +34,7 @@
             Graph graph = new Graph(graphSize);
             for (int i = 0; i < graphSize; i++)
             {
-                List<int> values;
-
-                values = _lines[_currentLine++]
+                var values = _lines[_currentLine++]
                     .Trim()
                     .Split(' ')
                     .Select(x => int.Parse(x, System.Globalization.NumberStyles.None))

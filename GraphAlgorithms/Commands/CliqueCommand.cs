@@ -39,7 +39,8 @@ public static class CliqueCommand
         Console.WriteLine(string.Join(", ", clique.ToArray()));
         Console.WriteLine($"Number of vertices: {clique.Count}");
         Console.WriteLine();
-        Console.WriteLine(graph.ToString(clique));
+        if (clique.Count <= 10)
+            Console.WriteLine(graph.ToString(clique));
     }
 
     private static ICliqueFastFinder GetFinder(string algType) => algType switch
