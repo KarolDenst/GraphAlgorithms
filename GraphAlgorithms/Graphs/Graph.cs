@@ -197,4 +197,30 @@ public class Graph
 
         return builder.ToString();
     }
+    
+    public void Print(IEnumerable<int> indices)
+    {
+        var highlightIndices = new HashSet<int>(indices);
+        var matrix = AdjacencyMatrix;
+        var foreground = Console.ForegroundColor;
+
+        for (int i = 0; i < matrix.GetLength(0); i++)
+        {
+            for (int j = 0; j < matrix.GetLength(1); j++)
+            {
+                if (highlightIndices.Contains(i) && highlightIndices.Contains(j))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(matrix[i, j]);
+                    Console.ForegroundColor = foreground;
+                    Console.Write(" ");
+                }
+                else
+                {
+                    Console.Write(matrix[i, j] + " ");
+                }
+            }
+            Console.WriteLine();
+        }
+    }
 }
