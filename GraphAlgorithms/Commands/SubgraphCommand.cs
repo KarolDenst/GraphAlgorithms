@@ -50,9 +50,15 @@ public static class SubgraphCommand
         Console.WriteLine("MCS in graph 1: " + string.Join(", ", subgraph1));
         Console.WriteLine("MCS in graph 2: " + string.Join(", ", subgraph2));
         Console.WriteLine($"{subgraph1.Length} vertices");
-        Console.WriteLine();
-        if (subgraph1.Length <= 10)
-            Console.WriteLine(graph1.ToString(subgraph1.ToList()));
+        
+        if (graph1.Size <= 15 && graph2.Size <= 15)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Graph 1:");
+            graph1.Print(subgraph1);
+            Console.WriteLine("Graph 2:");
+            graph2.Print(subgraph2);
+        }
     }
 
     private static ICliqueFastFinder GetFinder(string algType) => algType switch
