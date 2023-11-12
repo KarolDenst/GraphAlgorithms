@@ -8,6 +8,7 @@ param (
     [string]$runtime = "win-x64"
 )
 
+$originalDirectory = Get-Location
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $parentDirectory = Split-Path -Parent $scriptDirectory
 Set-Location $parentDirectory
@@ -33,4 +34,4 @@ $outputPath = "publish"
 dotnet publish $projectPath --configuration $buildConfiguration --output $outputPath --runtime $runtime --self-contained
 
 Write-Host "Executable should be created in: $outputPath."
-Set-Location $scriptDirectory
+Set-Location $originalDirectory
