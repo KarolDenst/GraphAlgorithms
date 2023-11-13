@@ -3,18 +3,17 @@ from os.path import isfile, join, splitext
 import matplotlib.pyplot as plt
 import sys
 import json
-import numpy as np
 
 
 def plot_benchmark(path):
     files = [f for f in listdir(path) if isfile(join(path, f))]
     for f in files:
         with open(join(path, f), 'r') as file:
-            jsonString = file.read()
-            benchmarkResult = json.loads(jsonString)
-            vertexNums = list(map(float, list(benchmarkResult.keys())))
-            times = list(map(lambda x: x / 1e6, benchmarkResult.values()))
-            plt.plot(vertexNums, times, label=splitext(f)[0])
+            json_string = file.read()
+            benchmark_result = json.loads(json_string)
+            vertex_nums = list(map(float, list(benchmark_result.keys())))
+            times = list(map(lambda x: x / 1e6, benchmark_result.values()))
+            plt.plot(vertex_nums, times, label=splitext(f)[0])
             plt.xlabel('vertex count')
             plt.ylabel('time [ms]')
             plt.legend(loc='upper right')
