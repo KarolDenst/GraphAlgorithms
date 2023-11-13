@@ -2,6 +2,7 @@
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using GraphAlgorithms.Commands;
+using GraphAlgorithms.Commands.Benchmark;
 
 namespace GraphAlgorithms;
 
@@ -50,6 +51,9 @@ internal static class Program
         
         var graphCommand = GraphCommand.Create();
         rootCommand.Add(graphCommand);
+        
+        var benchmarkCommand = BenchmarkCommand.Create();
+        rootCommand.Add(benchmarkCommand);
 
         return rootCommand;
     }
