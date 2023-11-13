@@ -9,7 +9,7 @@ public static class GraphCommand
         var fileOption = OptionsFactory.CreateFileOption();
         var indexOption = OptionsFactory.CreateIndexOption();
 
-        var command = new Command("graph", "Shows the adjacency matrix of a graph.")
+        var command = new Command("graph", "Show the adjacency matrix of a graph.")
         {
             fileOption,
             indexOption
