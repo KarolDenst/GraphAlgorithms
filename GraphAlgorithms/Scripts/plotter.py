@@ -8,9 +8,11 @@ def plot_benchmark(path):
     with open(path, 'r') as file:
         jsonString = file.read()
         benchmarkResult = json.loads(jsonString)
-        vertexNums = list(map(int, list(benchmarkResult.keys())))
+        vertexNums = list(map(float, list(benchmarkResult.keys())))
         times = list(benchmarkResult.values())
         plt.plot(vertexNums, times)
+        plt.xlabel('vertex count')
+        plt.ylabel('time [ns]')
 
 
 if len(sys.argv) != 2:

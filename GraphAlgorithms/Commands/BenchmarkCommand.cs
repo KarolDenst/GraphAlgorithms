@@ -37,7 +37,7 @@ namespace GraphAlgorithms.Commands
 
         private static void Run(string alg, string algType, string cmp, double density, int minSize, int maxSize, int step)
         {
-            Dictionary<int, double> benchmarkResult;
+            Dictionary<double, double> benchmarkResult;
             if (alg == "mcs")
             {
                 var graphs1 = GenerateRandomGraphs(minSize, maxSize, step, density);
@@ -92,25 +92,25 @@ namespace GraphAlgorithms.Commands
             process.WaitForExit();
         }
 
-        private static Dictionary<int, double> RunMaxCliqueBenchmark(List<Graph> graphs, Action<Graph> algorithm)
+        private static Dictionary<double, double> RunMaxCliqueBenchmark(List<Graph> graphs, Action<Graph> algorithm)
         {
             Stopwatch stopwatch = new();
-            Dictionary<int, double> result = new();
+            Dictionary<double, double> result = new();
             foreach (var graph in graphs)
             {
                 stopwatch.Restart();
                 algorithm.Invoke(graph);
                 stopwatch.Stop();
-                result.Add(graph.Size, stopwatch.Elapsed.TotalMilliseconds);
+                result.Add(graph.Size, (double)stopwatch.ElapsedTicks / Stopwatch.Frequency * 1e9);
             }
 
             return result;
         }
 
-        private static Dictionary<int, double> RunMcsBenchmark(List<Graph> graphs1, List<Graph> graphs2, Action<Graph, Graph> algorithm)
+        private static Dictionary<double, double> RunMcsBenchmark(List<Graph> graphs1, List<Graph> graphs2, Action<Graph, Graph> algorithm)
         {
             Stopwatch stopwatch = new();
-            Dictionary<int, double> result = new();
+            Dictionary<double, double> result = new();
             for (int i = 0; i < graphs1.Count; i++)
             {
                 var graph1 = graphs1[i];
@@ -118,7 +118,7 @@ namespace GraphAlgorithms.Commands
                 stopwatch.Restart();
                 algorithm.Invoke(graph1, graph2);
                 stopwatch.Stop();
-                result.Add(graph1.Size, stopwatch.Elapsed.TotalMilliseconds);
+                result.Add(graph1.Size, (double)stopwatch.ElapsedTicks / Stopwatch.Frequency * 1e9);
             }
 
             return result;
@@ -142,7 +142,7 @@ namespace GraphAlgorithms.Commands
             _ => throw new NotImplementedException()
         };
 
-        private static string SaveBenchmarkResults(Dictionary<int, double> benchmarkResults)
+        private static string SaveBenchmarkResults(Dictionary<double, double> benchmarkResults)
         {
             var serializerOptions = new JsonSerializerOptions { WriteIndented = true };
             string jsonString = JsonSerializer.Serialize(benchmarkResults, serializerOptions);
