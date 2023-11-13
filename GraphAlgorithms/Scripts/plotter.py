@@ -1,13 +1,16 @@
 import matplotlib.pyplot as plt
 import sys
 import json
+import numpy as np
 
 
 def plot_benchmark(path):
     with open(path, 'r') as file:
         jsonString = file.read()
-        pythonSettings = json.loads(jsonString)
-        print(jsonString[:15] + "...")
+        benchmarkResult = json.loads(jsonString)
+        vertexNums = list(map(int, list(benchmarkResult.keys())))
+        times = list(benchmarkResult.values())
+        plt.plot(vertexNums, times)
 
 
 if len(sys.argv) != 2:
@@ -16,3 +19,4 @@ if len(sys.argv) != 2:
 
 path = sys.argv[1]
 plot_benchmark(path)
+plt.show()
