@@ -13,10 +13,10 @@ def plot_benchmark(path):
             jsonString = file.read()
             benchmarkResult = json.loads(jsonString)
             vertexNums = list(map(float, list(benchmarkResult.keys())))
-            times = list(benchmarkResult.values())
+            times = list(map(lambda x: x / 1e6, benchmarkResult.values()))
             plt.plot(vertexNums, times, label=splitext(f)[0])
             plt.xlabel('vertex count')
-            plt.ylabel('time [ns]')
+            plt.ylabel('time [ms]')
             plt.legend(loc='upper right')
 
 
