@@ -5,6 +5,13 @@ Prerequisites.
     Run `dotnet --version` to make sure that you have .NET 7 installed.
     If not, please refer to https://dotnet.microsoft.com/en-us/download for the instructions.
 
+    The `benchmark` command requires Python and Matplotlib (a Python library) to be installed.
+    To check that you have Python installed, run `python --version`.
+    If not, please refer to https://www.python.org/downloads/.
+    Matplotlib can be installed by running
+        pip install matplotlib
+
+    In case of problems, refer to Matplotlib website (https://matplotlib.org/stable/users/installing/index.html).
 Building & running the application (Windows).
     To build the application, run 
         dotnet build GraphAlgorithms --configuration Release
@@ -31,3 +38,11 @@ DIMACS benchmark set.
 
     This will download a file with the test data to a newly created directory `GraphAlgorithms\Datasets`.
     Because the graphs available in the benchmark set are big, it's not recommended to use them for testing the exact algorithm.
+
+Benchmarking
+    The `benchmark` command allows for plotting the algorithm's execution time against the size of the graph.
+    To run it, you first need to configure the program by providing the path to your Python installation (this is a one-time operation, the configuration will be saved to `GraphAlgorithms/Config`).
+    This is done via the following command: 
+        config --pypath <path to Python executable>
+
+    The benchmark files are stored in `GraphAlgorithms/Benchmarks` directory.

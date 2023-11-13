@@ -83,4 +83,58 @@ public static class OptionsFactory
 
         return index2Option;
     }
+
+    public static Option<string> CreatePyPathOption()
+    {
+        var pyPathOption = new Option<string>(name: "--pypath",
+            description: "Path to Python interpreter");
+
+        return pyPathOption;
+    }
+
+    public static Option<string> CreateAlgorithmOption()
+    {
+        var algorithmOption = new Option<string>(name: "--algorithm",
+            description: "Algorithm to execute")
+        { IsRequired = true }
+            .FromAmong("mcs", "max-clique");
+
+        return algorithmOption;
+    }
+
+    public static Option<double> CreateDensityOption()
+    {
+        var densityOption = new Option<double>(name: "--density",
+            description: "Density of the generated graphs",
+            getDefaultValue: () => 0.5); // TODO bounds checking
+
+        return densityOption;
+    }
+
+    public static Option<int> CreateMinGraphSizeOption()
+    {
+        var minGraphSizeOption = new Option<int>(name: "--min-size",
+            description: "Minimum number of vertices in the generated graph",
+            getDefaultValue: () => 3);
+
+        return minGraphSizeOption;
+    }
+
+    public static Option<int> CreateMaxGraphSizeOption()
+    {
+        var maxGraphSizeOption = new Option<int>(name: "--max-size",
+            description: "Maximum number of vertices in tbe generated graph",
+            getDefaultValue: () => 100);
+
+        return maxGraphSizeOption;
+    }
+
+    public static Option<int> CreateStepOption()
+    {
+        var stepOption = new Option<int>(name: "--step",
+            description: "Difference between numbers of vertices in consecutive graphs",
+            getDefaultValue: () => 1);
+
+        return stepOption;
+    }
 }

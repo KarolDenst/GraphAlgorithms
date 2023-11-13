@@ -40,6 +40,11 @@ public static class GraphFactory
         return graph;
     }
 
+    public static Graph CreateRandom(int size, double density, int seed = 0)
+    {
+        return CreateRandom(size, (int)(size * (size - 1) * density), seed);
+    }
+
     public static Graph CreateRandomWithClique(int size, int numberOfEdges, int cliqueSize, int seed = 0)
     {
         var random = new Random(seed);

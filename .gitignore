@@ -399,3 +399,5 @@ Desktop.ini
 
 *.clq
 launchSettings.json
+Benchmarks/
+Config/
