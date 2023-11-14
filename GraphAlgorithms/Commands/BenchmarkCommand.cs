@@ -38,6 +38,15 @@ namespace GraphAlgorithms.Commands
 
         private static void Run(string alg, string? algType, string cmp, double density, int minSize, int maxSize, int step)
         {
+            if (density < 0 || density > 1)
+                throw new ArgumentOutOfRangeException(nameof(density), "Density must be between 0 and 1");
+            if (minSize < 0)
+                throw new ArgumentOutOfRangeException(nameof(minSize), "Minimum size can't be negative");
+            if (maxSize < 0)
+                throw new ArgumentOutOfRangeException(nameof(maxSize), "Maximum size can't be negative");
+            if (minSize > maxSize)
+                throw new ArgumentOutOfRangeException(nameof(minSize), "Minimum size can't be bigger than maximum size");
+
             Dictionary<double, double>? benchmarkResultExact = null;
             Dictionary<double, double>? benchmarkResultHeuristic = null;
             if (alg == "mcs")

@@ -106,7 +106,7 @@ public static class OptionsFactory
     {
         var densityOption = new Option<double>(name: "--density",
             description: "Density of the generated graphs",
-            getDefaultValue: () => 0.5); // TODO bounds checking
+            getDefaultValue: () => 0.5);
 
         return densityOption;
     }
