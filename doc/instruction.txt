@@ -1,48 +1,161 @@
 Description.
     GraphAlgorithms -- Collection of graph algorithms.
 
-Prerequisites.
-    Run `dotnet --version` to make sure that you have .NET 7 installed.
-    If not, please refer to https://dotnet.microsoft.com/en-us/download for the instructions.
+Disclaimers.
+    The instruction below was tested on a laboratory computer available in room 311.
 
-    The `benchmark` command requires Python and Matplotlib (a Python library) to be installed.
-    To check that you have Python installed, run `python --version`.
-    If not, please refer to https://www.python.org/downloads/.
-    Matplotlib can be installed by running
-        pip install matplotlib
+Conventions used in the instruction.
+    The instruction contains commands to type into the terminal (throughout the instruction, PowerShell is assumed to be used; more information on using PowerShell can be found in the subsequent sections).
+    These commands are placed between backticks (`), like `command`.
+    They are meant to be interpreted verbatim (can be copy-pasted into the terminal) unless they contain text between the angle brackets (< and >).
+    The text between < and > is a placeholder and is meant to be filled in by the user.
+    Backticks are also used to denote filenames, command options, etc.
 
-    In case of problems, refer to Matplotlib website (https://matplotlib.org/stable/users/installing/index.html).
-Building & running the application (Windows).
-    To build the application, run 
-        dotnet build GraphAlgorithms --configuration Release
+Prerequisites for the base version *.
+    To run the program in the base version, .NET 7 has to be installed.
+    It's been verified that it's already installed on the computers in the laboratory so no additional steps are required.
+ 
+        * The `benchmark` command requires Python and Matplotlib (a Python library) to be installed.
+        It is an additional functionality and what follows in this section can be skipped.
+        More details about additional functionalities can be found in the "Additional functionalities" section.
+        To check that you have Python installed, run `python --version`.
+        If not, please refer to https://www.python.org/downloads/.
+        Matplotlib can be installed by running
+            `pip install matplotlib`
 
-    Navigate to the build directory located at `GraphAlgorithms\bin\Release\net7.0`.
-    If using Windows Command Prompt run the following:
-        cd GraphAlgorithms\bin\Release\net7.0
+        In case of problems, refer to Matplotlib website (https://matplotlib.org/stable/users/installing/index.html).
+
+Running the application (Windows).
+    Download and unzip the archive with the project.
+    Open the unzipped folder in PowerShell; this can be done in one of two ways:
+        a.
+            1. open the project folder in File Explorer,
+            2. use the Alt+D shortcut (address bar on top now highlights),
+            3. type `powershell` and hit Enter.
+        b. 
+            1. use the Windows+X shortcut and choose PowerShell from the list, 
+            2. navigate to the project folder using the command `cd <path to the unzipped folder>`.
+
+    In what follows it is assumed that the current working directory was set to the project folder as indicated above.
+    The `ls` command will show 4 folders: Doc, Example, Exe, and Source.
+
+    To run the program navigate to the Exe folder by typing `cd Exe`.
+    Again using the `ls` command it can be verified that this folder contains some number of DLL files and other folders;
+    the only file that is in the user's interest is `GraphAlgorithms.exe`.
+
+    To view the built-in user manual run the program with the `--help` option, i.e.
+        `./GraphAlgorithms --help`
+    
+    This will give a list of available commands. To learn more about individual commands, run each of them with the `--help` option, e.g.
+        `./GraphAlgorithms max-clique --help`
+    
+    What follows is a description of all available commands:
+        max-clique  Finds maximum clique in a graph. For this command the following options are available:
+            -f, --file <file>                        Path to file with graphs
+            -i, --index <index>                      Index of the graph in the file [default: 0]
+            -t, --type <exact|heuristic> (REQUIRED)  Type of the algorithm
+            --cmp <vertices|vertices-then-edges>     Graph comparison type [default: vertices]
+            -?, -h, --help                           Show help and usage information
+
+        mcs         Finds maximum common subgraph. For this command the following options are available:
+            -f, --file <file> (REQUIRED)             Path to file with graphs
+            -f2, --file2 <file2>                     Path to the second file with graphs
+            -i1, --index1 <index1>                   Index of the 1st graph in the file [default: 0]
+            -i2, --index2 <index2>                   Index of the 2nd graph in the file [default: 0]
+            -t, --type <exact|heuristic> (REQUIRED)  Type of the algorithm
+            --cmp <vertices|vertices-then-edges>     Graph comparison type [default: vertices]
+            -?, -h, --help                           Show help and usage information
+
+        metric      Find the distance between two graphs.
+            -f, --file <file> (REQUIRED)             Path to file with graphs
+            -f2, --file2 <file2>                     Path to the second file with graphs
+            -i1, --index1 <index1>                   Index of the 1st graph in the file [default: 0]
+            -i2, --index2 <index2>                   Index of the 2nd graph in the file [default: 0]
+            -t, --type <exact|heuristic> (REQUIRED)  Type of the algorithm
+            -?, -h, --help                           Show help and usage information
+
+        size        Calculates size of a graph.
+            -f, --file <file> (REQUIRED)  Path to file with graphs
+            -i, --index <index>           Index of the graph in the file [default: 0]
+            -?, -h, --help                Show help and usage information
+
+        graph       Show the adjacency matrix of a graph.
+            -f, --file <file> (REQUIRED)  Path to file with graphs
+            -i, --index <index>           Index of the graph in the file [default: 0]
+            -?, -h, --help                Show help and usage information
+
+        NOTICE: The commands below are an additional functionality and were used in creating the report.
+        They are available in case the user would like to recreate the results from the report.
+
+        config      Configures the program.
+            --pypath <pypath>  Path to Python interpreter
+            -?, -h, --help     Show help and usage information
+
+        benchmark   Performs benchmark test on random graphs.
+            --algorithm <max-clique|mcs> (REQUIRED)  Algorithm to execute
+            -t, --type <exact|heuristic>             Type of the algorithm
+            --cmp <vertices|vertices-then-edges>     Graph comparison type [default: vertices]
+            --density <density>                      Density of the generated graphs [default: 0.5]
+            --min-size <min-size>                    Minimum number of vertices in the generated graph [default: 3]
+            --max-size <max-size>                    Maximum number of vertices in tbe generated graph [default: 100]
+            --step <step>                            Difference between numbers of vertices in consecutive graphs [default: 1]
+            -?, -h, --help                           Show help and usage information
+
+    For demonstration purposes, you can run the following commands (it is assumed that the current working directory is still GraphAlgorithms/Exe):
+        Find the maximum clique on file `example3_size3.txt` using the exact algorithm and default size definition (vertex count)
+            `./GraphAlgorithms max-clique -f ../Examples/example3_size3.txt -t exact`
+        
+        Run the heuristic maximum clique finding algorithm on the C125.9 DIMACS benchmark instance with default size definition (vertex count)
+            `./GraphAlgorithms dimacs -n C125.9 -t heuristic`
+
+        Run the heuristic maximum common subgraph algorithm on graphs from files `example6_size10.txt` and `example7_size20.txt`
+            `./GraphAlgorithms mcs -f ../Examples/example6_size10.txt -f2 ../Examples/example7_size20.txt -t heuristic`
+
+        Calculate the metric between two graphs (in this example, it is the same graph, located in file `example6_size10.txt`).
+        As expected, the result is 0.
+        This example uses the heuristic algorithm for finding the MCS (for the definition of the metric, refer to the report file).
+            `./GraphAlgorithms metric -f ../Examples/example6_size10.txt -f2 ../Examples/example6_size10.txt -t heuristic`
+        
+        Calculate the size of the graph given in the file `example6_size10.txt`. In this example, the default size (vertex-then-edge) definition is used.
+        For a definition of size refer to the report file.
+            `./GraphAlgorithms size -f ../Examples/example6_size10.txt`
+
+        Print the adjacency matrix of a graph given in the file `example6_size10.txt`.
+            `./GraphAlgorithms graph -f ../Examples/example6_size10.txt`
+
+Building the application (Windows).
+    It's assumed that the commands are executed from PowerShell as indicated in the previous section. 
+    It's also assumed that the current working directory is the `Source` folder of the project.
+        If you're following the instructions step-by-step and are currently in the `Exe` folder, navigate to the root folder, by typing `cd ../Source`.
+        If instead, your current working directory is the root folder of the project, type `cd Source`.
+
+    To build the application from source, run 
+        `dotnet build GraphAlgorithms --configuration Release`
+
+    Navigate to the build directory located at `GraphAlgorithms/bin/Release/net7.0`.
+    The compiled executable is located in the subfolder `Source/GraphAlgorithms/bin/Release/net7.0/`
+    Navigate to this folder by typing
+	    cd GraphAlgorithms/bin/Release/net7.0
 
     The executable name is `GraphAlgorithms.exe`.
-    Further information about using the program can be obtained by running it with `--help` option:
-        .\GraphAlgorithms.exe --help
+    You can verify that the program compiled correctly by running, for example,
+	    `./GraphAlgorithms --help`
+    or
+        `./GraphAlgorithms --version`
 
-    The program can run different commands, for example, `max-clique`.
-    To get detailed information about each command, run the command with `--help` option, in this example:
-        .\GraphAlgorithms.exe max-clique --help
+Additional functionalities.
+    DIMACS benchmark set.
+        The maximum clique-finding algorithm can be tested on the instances from the DIMACS benchmark set (https://iridia.ulb.ac.be/~fmascia/maximum_clique/DIMACS-benchmark).
+        For example, to run the heuristic algorithm on the first graph instance listed there, `C125.9`, run 
+            `.\GraphAlgorithms.exe dimacs --name C125.9 --type heuristic`
 
-    This will give the list of all available options for a given command.
-    Please notice that some options are mandatory and marked as `REQUIRED`.
+        This will download a file with the test data to a newly created directory `GraphAlgorithms\Datasets`.
+        Because the graphs available in the benchmark set are big, it's not recommended to use them for testing the exact algorithm.
 
-DIMACS benchmark set.
-    The maximum clique-finding algorithm can be tested on the instances from the DIMACS benchmark set (https://iridia.ulb.ac.be/~fmascia/maximum_clique/DIMACS-benchmark).
-    For example, to run the heuristic algorithm on the first graph instance listed there, `C125.9`, run 
-        .\GraphAlgorithms.exe dimacs --name C125.9 --type heuristic
+    Benchmarking
+        The `benchmark` command allows for plotting the algorithm's execution time against the size of the graph.
+        To run it, you first need to configure the program by providing the path to your Python installation (this is a one-time operation, the configuration will be saved to `GraphAlgorithms/Config`).
+        This is done via the following command: 
+            `config --pypath <path to Python executable>`
 
-    This will download a file with the test data to a newly created directory `GraphAlgorithms\Datasets`.
-    Because the graphs available in the benchmark set are big, it's not recommended to use them for testing the exact algorithm.
-
-Benchmarking
-    The `benchmark` command allows for plotting the algorithm's execution time against the size of the graph.
-    To run it, you first need to configure the program by providing the path to your Python installation (this is a one-time operation, the configuration will be saved to `GraphAlgorithms/Config`).
-    This is done via the following command: 
-        config --pypath <path to Python executable>
-
-    The benchmark files are stored in `GraphAlgorithms/Benchmarks` directory.
+        The benchmark files are stored in `GraphAlgorithms/Benchmarks` directory.
