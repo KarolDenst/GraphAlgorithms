@@ -29,25 +29,13 @@ namespace GraphAlgorithms.Utils
                     if (u1 == u2 || v1 == v2)
                         continue;
                     
-                    if (graph1.AdjacencyMatrix[u1, u2] == 0)
-                    {
-                        if (graph2.AdjacencyMatrix[v1, v2] == 0)
-                            product.AdjacencyMatrix[i, j] = 1;
-                    }
-                    else if (graph2.AdjacencyMatrix[v1, v2] != 0)
-                    {
-                        product.AdjacencyMatrix[i, j] = 2 * Math.Min(graph1.AdjacencyMatrix[u1, u2], graph2.AdjacencyMatrix[v1, v2]);
-                    }
+                    if (graph1.AdjacencyMatrix[u1, u2] == 0 && graph2.AdjacencyMatrix[v1, v2] == 0)
+                        product.AdjacencyMatrix[i, j] = 1;
+                    product.AdjacencyMatrix[i, j] = 2 * Math.Min(graph1.AdjacencyMatrix[u1, u2], graph2.AdjacencyMatrix[v1, v2]);
 
-                    if (graph1.AdjacencyMatrix[u2, u1] == 0)
-                    {
-                        if (graph2.AdjacencyMatrix[v2, v1] == 0)
-                            product.AdjacencyMatrix[i, j] = 1;
-                    }
-                    else if (graph2.AdjacencyMatrix[v2, v1] != 0)
-                    {
-                        product.AdjacencyMatrix[j, i] = 2 * Math.Min(graph1.AdjacencyMatrix[u2, u1], graph2.AdjacencyMatrix[v2, v1]);
-                    }
+                    if (graph1.AdjacencyMatrix[u2, u1] == 0 && graph2.AdjacencyMatrix[v2, v1] == 0)
+                        product.AdjacencyMatrix[j, i] = 1;
+                    product.AdjacencyMatrix[j, i] = 2 * Math.Min(graph1.AdjacencyMatrix[u2, u1], graph2.AdjacencyMatrix[v2, v1]);
                 }
             }
 
