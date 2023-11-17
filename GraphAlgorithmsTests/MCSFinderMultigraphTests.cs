@@ -16,19 +16,23 @@ public class MCSFinderMultigraphTests
         Graph graph2;
         List<Mapping> mappings; // each set corresponds to one mapping
         
-        graph1 = new Graph(2);
-        graph1.AdjacencyMatrix = new[,]
+        graph1 = new Graph(2)
         {
-              { 0, 1 },
-              { 1, 0 }, 
+            AdjacencyMatrix = new[,]
+            {
+                { 0, 1 },
+                { 1, 0 }, 
+            }
         };
-        graph2 = new Graph(2);
-        graph2.AdjacencyMatrix = new[,]
+        graph2 = new Graph(2)
         {
-            { 0, 10 },
-            { 10, 0 },
+            AdjacencyMatrix = new[,]
+            {
+                { 0, 10 },
+                { 10, 0 },
+            }
         };
-
+        
         mappings = new List<Mapping> { new Mapping { (0, 0), (1, 1) } };
         yield return new TestCaseData(graph1, graph2, mappings);
         
@@ -52,8 +56,32 @@ public class MCSFinderMultigraphTests
                 { 10, 0 },
             }
         };
-
+        
         mappings = new List<Mapping> { new Mapping { (2, 0), (3, 1) } };
+        yield return new TestCaseData(graph1, graph2, mappings);
+        
+        graph1 = new Graph(3)
+        {
+            AdjacencyMatrix = new[,]
+            {
+                { 0, 1, 1 },
+                { 1, 0, 1 }, 
+                { 1, 1, 0 }, 
+            }
+        };
+        graph2 = new Graph(5)
+        {
+            AdjacencyMatrix = new[,]
+            {
+                { 0, 1, 1, 0, 0 },
+                { 1, 0, 1, 0, 0 }, 
+                { 1, 1, 0, 0, 0 }, 
+                { 0, 0, 0, 0, 10 },
+                { 0, 0, 0, 10, 0 },
+            }
+        };
+
+        mappings = new List<Mapping> { new Mapping { (0, 0), (1, 1), (2, 2) } };
         yield return new TestCaseData(graph1, graph2, mappings);
     }
     
