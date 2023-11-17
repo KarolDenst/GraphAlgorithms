@@ -159,3 +159,14 @@ Additional functionalities.
             `config --pypath <path to Python executable>`
 
         The benchmark files are stored in `GraphAlgorithms/Benchmarks` directory.
+
+Publishing -> run the script and do this manually from Exe (I've already wasted way too much time trying to put this thing into the script):
+    .venv/scripts/activate.ps1
+    py -m pip install matplotlib
+    deactivate
+
+Running benchmarks using python virtual environment (from Exe)
+    .venv/scripts/activate.ps1
+    ./GraphAlgorithms config --pypath ".venv/Scripts/python.exe"
+    ./GraphAlgorithms benchmark --algorithm max-clique
+    deactivate
