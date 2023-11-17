@@ -1,7 +1,7 @@
-﻿using System.CommandLine;
+﻿using GraphAlgorithms.Commands;
+using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
-using GraphAlgorithms.Commands;
 
 namespace GraphAlgorithms;
 
@@ -47,9 +47,15 @@ internal static class Program
 
         var sizeCommand = SizeCommand.Create();
         rootCommand.Add(sizeCommand);
-        
+
         var graphCommand = GraphCommand.Create();
         rootCommand.Add(graphCommand);
+
+        var configCommand = ConfigCommand.Create();
+        rootCommand.Add(configCommand);
+
+        var benchmarkCommand = BenchmarkCommand.Create();
+        rootCommand.Add(benchmarkCommand);
 
         return rootCommand;
     }
