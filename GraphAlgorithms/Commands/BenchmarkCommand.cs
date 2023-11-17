@@ -20,6 +20,7 @@ namespace GraphAlgorithms.Commands
             var minGraphSizeOption = OptionsFactory.CreateMinGraphSizeOption();
             var maxGraphSizeOption = OptionsFactory.CreateMaxGraphSizeOption();
             var stepOption = OptionsFactory.CreateStepOption();
+            var noPlotOption = OptionsFactory.CreateNoPlotOption();
 
             var benchmarkCommand = new Command("benchmark", "Perform benchmark test on random graphs.")
             {
@@ -29,14 +30,15 @@ namespace GraphAlgorithms.Commands
                 densityOption,
                 minGraphSizeOption,
                 maxGraphSizeOption,
-                stepOption
+                stepOption,
+                noPlotOption
             };
-            benchmarkCommand.SetHandler(Run, algorithmOption, algorithmTypeOption, cmpOption, densityOption, minGraphSizeOption, maxGraphSizeOption, stepOption);
+            benchmarkCommand.SetHandler(Run, algorithmOption, algorithmTypeOption, cmpOption, densityOption, minGraphSizeOption, maxGraphSizeOption, stepOption, noPlotOption);
 
             return benchmarkCommand;
         }
 
-        private static void Run(string alg, string? algType, string cmp, double density, int minSize, int maxSize, int step)
+        private static void Run(string alg, string? algType, string cmp, double density, int minSize, int maxSize, int step, bool? noPlot)
         {
             if (density < 0 || density > 1)
                 throw new ArgumentOutOfRangeException(nameof(density), "Density must be between 0 and 1");
@@ -91,6 +93,9 @@ namespace GraphAlgorithms.Commands
                 SaveBenchmarkResults(benchmarkResultExact, benchmarkName, "exact");
             if (benchmarkResultHeuristic != null)
                 SaveBenchmarkResults(benchmarkResultHeuristic, benchmarkName, "heuristic");
+
+            if (noPlot != null && noPlot == true)
+                return;
 
             PlotResults(benchmarkName);
         }
@@ -194,6 +199,7 @@ namespace GraphAlgorithms.Commands
             Directory.CreateDirectory(benchmarkDir);
             string benchmarkPath = Path.Combine(benchmarkDir, type) + ".json";
             File.WriteAllText(benchmarkPath, jsonString);
+            Console.WriteLine($"benchmark saved at {benchmarkPath}");
 
             return benchmarkPath;
         }

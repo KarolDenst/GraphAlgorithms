@@ -137,4 +137,15 @@ public static class OptionsFactory
 
         return stepOption;
     }
+
+    public static Option<bool?> CreateNoPlotOption()
+    {
+        var noPlotOption = new Option<bool?>(name: "--no-plot",
+            description: "Suppress automatic plotting of benchmark results")
+        {
+            Arity = ArgumentArity.ZeroOrOne
+        };
+
+        return noPlotOption;
+    }
 }
