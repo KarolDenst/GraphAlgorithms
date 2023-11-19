@@ -137,4 +137,13 @@ public static class OptionsFactory
 
         return stepOption;
     }
+
+    public static Option<int> CreateSamplesOption()
+    {
+        var samples = new Option<int>(name: "--samples",
+            description: "Number of graphs of the same size to take the average from",
+            getDefaultValue: () => 5);
+
+        return samples;
+    }
 }
