@@ -29,7 +29,7 @@ public static class OptionsFactory
     {
         var cmpOption = new Option<string>(name: "--cmp",
                 description: "Graph comparison type",
-                getDefaultValue: () => "vertices")
+                getDefaultValue: () => "vertices-then-edges")
             .FromAmong("vertices", "vertices-then-edges");
 
         return cmpOption;
