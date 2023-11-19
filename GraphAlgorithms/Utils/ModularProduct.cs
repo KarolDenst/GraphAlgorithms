@@ -30,12 +30,12 @@ namespace GraphAlgorithms.Utils
                         continue;
                     
                     if (graph1.AdjacencyMatrix[u1, u2] == 0 && graph2.AdjacencyMatrix[v1, v2] == 0)
-                        product.AddBothSidesEdge(i, j);
+                        product.AddEdge(i, j);
                     else if (graph1.AdjacencyMatrix[u1, u2] != 0 && graph2.AdjacencyMatrix[v1, v2] != 0)
                         product.AddBothSidesEdge(i, j);
 
                     if (graph1.AdjacencyMatrix[u2, u1] == 0 && graph2.AdjacencyMatrix[v2, v1] == 0)
-                        product.AddBothSidesEdge(j, i);
+                        product.AddEdge(j, i);
                     else if (graph1.AdjacencyMatrix[u2, u1] != 0 && graph2.AdjacencyMatrix[v2, v1] != 0)
                         product.AddBothSidesEdge(j, i);                    
                 }
