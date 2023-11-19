@@ -146,4 +146,15 @@ public static class OptionsFactory
 
         return samples;
     }
+
+    public static Option<string> CreateAlgorithmTypeOptionForBenchmark()
+    {
+        var algorithmTypeOption = new Option<string>(name: "--type",
+                description: "Type of the algorithm to run the benchmark on. Choose 'both' to run the benchmark for both algorithm types",
+                getDefaultValue: () => "both")
+            .FromAmong("exact", "heuristic", "both");
+        algorithmTypeOption.AddAlias("-t");
+
+        return algorithmTypeOption;
+    }
 }

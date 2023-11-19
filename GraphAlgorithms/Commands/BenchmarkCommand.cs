@@ -13,8 +13,7 @@ namespace GraphAlgorithms.Commands
         public static Command Create()
         {
             var algorithmOption = OptionsFactory.CreateAlgorithmOption();
-            var algorithmTypeOption = OptionsFactory.CreateAlgorithmTypeOption();
-            algorithmTypeOption.IsRequired = false;
+            var algorithmTypeOption = OptionsFactory.CreateAlgorithmTypeOptionForBenchmark();
             var cmpOption = OptionsFactory.CreateCmpOption();
             var densityOption = OptionsFactory.CreateDensityOption();
             var minGraphSizeOption = OptionsFactory.CreateMinGraphSizeOption();
@@ -38,7 +37,7 @@ namespace GraphAlgorithms.Commands
             return benchmarkCommand;
         }
 
-        private static void Run(string alg, string? algType, string cmp, double density, int minSize, int maxSize, int step, int samples)
+        private static void Run(string alg, string algType, string cmp, double density, int minSize, int maxSize, int step, int samples)
         {
             if (density < 0 || density > 1)
                 throw new ArgumentOutOfRangeException(nameof(density), "Density must be between 0 and 1");
@@ -53,37 +52,31 @@ namespace GraphAlgorithms.Commands
             Dictionary<double, double>? benchmarkResultHeuristic = null;
             if (alg == "mcs")
             {
-                if (algType != null)
-                {
-                    if (algType == "exact")
-                        benchmarkResultExact = RunMcsBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
-                    else if (algType == "heuristic")
-                        benchmarkResultHeuristic = RunMcsBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
-                    else
-                        throw new NotImplementedException();
-                }
-                else
+                if (algType == "exact")
+                    benchmarkResultExact = RunMcsBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
+                else if (algType == "heuristic")
+                    benchmarkResultHeuristic = RunMcsBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
+                else if (algType == "both")
                 {
                     benchmarkResultExact = RunMcsBenchmark("exact", cmp, minSize, maxSize, step, density, samples);
                     benchmarkResultHeuristic = RunMcsBenchmark("heuristic", cmp, minSize, maxSize, step, density, samples);
                 }
+                else
+                    throw new NotImplementedException();
             }
             else if (alg == "max-clique")
             {
-                if (algType != null)
-                {
-                    if (algType == "exact")
-                        benchmarkResultExact = RunMaxCliqueBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
-                    else if (algType == "heuristic")
-                        benchmarkResultHeuristic = RunMaxCliqueBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
-                    else
-                        throw new NotImplementedException();
-                }
-                else
+                if (algType == "exact")
+                    benchmarkResultExact = RunMaxCliqueBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
+                else if (algType == "heuristic")
+                    benchmarkResultHeuristic = RunMaxCliqueBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
+                else if (algType == "both")
                 {
                     benchmarkResultExact = RunMaxCliqueBenchmark("exact", cmp, minSize, maxSize, step, density, samples);
                     benchmarkResultHeuristic = RunMaxCliqueBenchmark("heuristic", cmp, minSize, maxSize, step, density, samples);
                 }
+                else
+                    throw new NotImplementedException();
             }
             else
                 throw new NotImplementedException("No benchmark available for this algorithm");
