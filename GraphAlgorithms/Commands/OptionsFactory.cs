@@ -7,8 +7,8 @@ public static class OptionsFactory
     public static Option<string> CreateNameOption()
     {
         var nameOption = new Option<string>(name: "--name",
-                description: "Name of the benchmark we want to test.")
-        { IsRequired = true };
+                description: "Name of the benchmark we want to test.",
+                getDefaultValue: () => "C125.9");
         nameOption.AddAlias("-n");
 
         return nameOption;
@@ -17,8 +17,8 @@ public static class OptionsFactory
     public static Option<string> CreateAlgorithmTypeOption()
     {
         var algorithmTypeOption = new Option<string>(name: "--type",
-                description: "Type of the algorithm")
-        { IsRequired = true }
+                description: "Type of the algorithm",
+                getDefaultValue: () => "heuristic")
             .FromAmong("exact", "heuristic");
         algorithmTypeOption.AddAlias("-t");
 
@@ -95,8 +95,8 @@ public static class OptionsFactory
     public static Option<string> CreateAlgorithmOption()
     {
         var algorithmOption = new Option<string>(name: "--algorithm",
-            description: "Algorithm to execute")
-        { IsRequired = true }
+            description: "Algorithm to execute",
+            getDefaultValue: () => "max-clique")
             .FromAmong("mcs", "max-clique");
 
         return algorithmOption;
