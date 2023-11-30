@@ -30,16 +30,14 @@ namespace GraphAlgorithms.Commands
                 densityOption,
                 minGraphSizeOption,
                 maxGraphSizeOption,
-                stepOption,
-                samplesOption
+                samplesOption,
                 noPlotOption
             };
-            benchmarkCommand.SetHandler(Run, algorithmOption, algorithmTypeOption, cmpOption, densityOption, minGraphSizeOption, maxGraphSizeOption, stepOption, bool? noPlot);
-
+            benchmarkCommand.SetHandler(Run, algorithmOption, algorithmTypeOption, cmpOption, densityOption, minGraphSizeOption, maxGraphSizeOption, samplesOption, noPlotOption);
             return benchmarkCommand;
         }
 
-        private static void Run(string alg, string algType, string cmp, double density, int minSize, int maxSize, int step, int samples, bool? noPlot)
+        private static void Run(string alg, string algType, string cmp, double density, int minSize, int maxSize, int samples, bool? noPlot)
         {
             if (density < 0 || density > 1)
                 throw new ArgumentOutOfRangeException(nameof(density), "Density must be between 0 and 1");
@@ -55,13 +53,13 @@ namespace GraphAlgorithms.Commands
             if (alg == "mcs")
             {
                 if (algType == "exact")
-                    benchmarkResultExact = RunMcsBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
+                    benchmarkResultExact = RunMcsBenchmark(algType, cmp, minSize, maxSize, density, samples);
                 else if (algType == "heuristic")
-                    benchmarkResultHeuristic = RunMcsBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
+                    benchmarkResultHeuristic = RunMcsBenchmark(algType, cmp, minSize, maxSize, density, samples);
                 else if (algType == "both")
                 {
-                    benchmarkResultExact = RunMcsBenchmark("exact", cmp, minSize, maxSize, step, density, samples);
-                    benchmarkResultHeuristic = RunMcsBenchmark("heuristic", cmp, minSize, maxSize, step, density, samples);
+                    benchmarkResultExact = RunMcsBenchmark("exact", cmp, minSize, maxSize, density, samples);
+                    benchmarkResultHeuristic = RunMcsBenchmark("heuristic", cmp, minSize, maxSize, density, samples);
                 }
                 else
                     throw new NotImplementedException();
@@ -69,13 +67,13 @@ namespace GraphAlgorithms.Commands
             else if (alg == "max-clique")
             {
                 if (algType == "exact")
-                    benchmarkResultExact = RunMaxCliqueBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
+                    benchmarkResultExact = RunMaxCliqueBenchmark(algType, cmp, minSize, maxSize, density, samples);
                 else if (algType == "heuristic")
-                    benchmarkResultHeuristic = RunMaxCliqueBenchmark(algType, cmp, minSize, maxSize, step, density, samples);
+                    benchmarkResultHeuristic = RunMaxCliqueBenchmark(algType, cmp, minSize, maxSize, density, samples);
                 else if (algType == "both")
                 {
-                    benchmarkResultExact = RunMaxCliqueBenchmark("exact", cmp, minSize, maxSize, step, density, samples);
-                    benchmarkResultHeuristic = RunMaxCliqueBenchmark("heuristic", cmp, minSize, maxSize, step, density, samples);
+                    benchmarkResultExact = RunMaxCliqueBenchmark("exact", cmp, minSize, maxSize, density, samples);
+                    benchmarkResultHeuristic = RunMaxCliqueBenchmark("heuristic", cmp, minSize, maxSize, density, samples);
                 }
                 else
                     throw new NotImplementedException();
@@ -117,7 +115,7 @@ namespace GraphAlgorithms.Commands
             process.WaitForExit();
         }
 
-        private static Dictionary<double, double> RunMaxCliqueBenchmark(string algType, string cmp, int minSize, int maxSize, int step, double density, int samples)
+        private static Dictionary<double, double> RunMaxCliqueBenchmark(string algType, string cmp, int minSize, int maxSize, double density, int samples)
         {
             ICliqueFastFinder finder = GetFinder(algType);
 
@@ -133,7 +131,7 @@ namespace GraphAlgorithms.Commands
 
             for (int s = 0; s < samples; s++)
             {
-                var graphs = GenerateRandomGraphs(minSize, maxSize, step, density, s);
+                var graphs = GenerateRandomGraphs(minSize, maxSize, density, s);
                 foreach (var graph in graphs)
                 {
                     stopwatch.Restart();
@@ -151,7 +149,7 @@ namespace GraphAlgorithms.Commands
             return averagedResult;
         }
 
-        private static Dictionary<double, double> RunMcsBenchmark(string algType, string cmp, int minSize, int maxSize, int step, double density, int samples)
+        private static Dictionary<double, double> RunMcsBenchmark(string algType, string cmp, int minSize, int maxSize, double density, int samples)
         {
 
 
@@ -165,8 +163,8 @@ namespace GraphAlgorithms.Commands
 
             for (int s = 0; s < samples; s++)
             {
-                var graphs1 = GenerateRandomGraphs(minSize, maxSize, step, density, s);
-                var graphs2 = GenerateRandomGraphs(minSize, maxSize, step, density, s);
+                var graphs1 = GenerateRandomGraphs(minSize, maxSize, density, s);
+                var graphs2 = GenerateRandomGraphs(minSize, maxSize, density, s);
                 for (int i = 0; i < graphs1.Count; i++)
                 {
                     var graph1 = graphs1[i];
@@ -186,10 +184,10 @@ namespace GraphAlgorithms.Commands
             return averagedResult;
         }
 
-        private static List<Graph> GenerateRandomGraphs(int minSize, int maxSize, int step, double density, int seed)
+        private static List<Graph> GenerateRandomGraphs(int minSize, int maxSize, double density, int seed)
         {
             var graphs = new List<Graph>();
-            for (int size = minSize; size <= maxSize; size += step)
+            for (int size = minSize; size <= maxSize; size++)
             {
                 graphs.Add(GraphFactory.CreateRandom(size, density, seed));
             }
