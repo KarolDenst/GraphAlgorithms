@@ -123,7 +123,7 @@ public static class OptionsFactory
     public static Option<int> CreateMaxGraphSizeOption()
     {
         var maxGraphSizeOption = new Option<int>(name: "--max-size",
-            description: "Maximum number of vertices in tbe generated graph",
+            description: "Maximum number of vertices in the generated graph",
             getDefaultValue: () => 100);
 
         return maxGraphSizeOption;

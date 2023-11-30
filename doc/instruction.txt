@@ -82,14 +82,16 @@ Running the application (Windows).
             -?, -h, --help     Show help and usage information
 
         benchmark   Performs benchmark test on random graphs.
-            --algorithm <max-clique|mcs> (REQUIRED)  Algorithm to execute
-            -t, --type <exact|heuristic>             Type of the algorithm
-            --cmp <vertices|vertices-then-edges>     Graph comparison type [default: vertices]
-            --density <density>                      Density of the generated graphs [default: 0.5]
-            --min-size <min-size>                    Minimum number of vertices in the generated graph [default: 3]
-            --max-size <max-size>                    Maximum number of vertices in tbe generated graph [default: 100]
-            --step <step>                            Difference between numbers of vertices in consecutive graphs [default: 1]
-            -?, -h, --help                           Show help and usage information
+            --algorithm <max-clique|mcs>          Algorithm to execute [default: max-clique]
+            -t, --type <both|exact|heuristic>     Type of the algorithm to run the benchmark on. Choose 'both' to run the
+                                                  benchmark for both algorithm types [default: both]
+            --cmp <vertices|vertices-then-edges>  Graph comparison type [default: vertices-then-edges]
+            --density <density>                   Density of the generated graphs [default: 0.5]
+            --min-size <min-size>                 Minimum number of vertices in the generated graph [default: 3]
+            --max-size <max-size>                 Maximum number of vertices in the generated graph [default: 100]
+            --samples <samples>                   Number of graphs of the same size to take the average from [default: 5]
+            --no-plot                             Suppress automatic plotting of benchmark results
+            -?, -h, --help                        Show help and usage information
 
     For demonstration purposes, you can run the following commands (it is assumed that the current working directory is still GraphAlgorithms/Exe):
         Find the maximum clique on file `example3_size3.txt` using the exact algorithm and default size definition (vertex count)
