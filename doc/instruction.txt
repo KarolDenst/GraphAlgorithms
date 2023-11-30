@@ -147,7 +147,7 @@ Additional functionalities.
     Benchmarking (without Python installed -- can be used at the laboratory workstations)
         The `benchmark` command allows for plotting the algorithm's execution time against the size of the graph.
         For example, to test the max-clique algorithm for a sequence of graphs of minimum size 5 and maximum size 100, with each having 2 more vertices than the previous one in the sequence, type
-            `./GraphAlgorithms benchmark --algorithm max-clique --min-size 5 --max-size 100 --step 2 --no-plot`
+            `./GraphAlgorithms benchmark --algorithm max-clique --min-size 5 --max-size 100 --no-plot`
 
         The output of this command contains information about the files that the benchmarks were saved to, for example:
             benchmark saved at C:\Projects\GraphAlgorithms\GraphAlgorithms\Benchmarks\11-17-23_18-07-34\exact.json
@@ -161,4 +161,4 @@ Additional functionalities.
             `./GraphAlgorithms config --pypath <path to the interpreter>`
         
         Run the test:
-            `./GraphAlgorithms benchmark --algorithm max-clique --min-size 5 --max-size 100 --step 2`
+            `./GraphAlgorithms benchmark --algorithm max-clique --min-size 5 --max-size 100`
