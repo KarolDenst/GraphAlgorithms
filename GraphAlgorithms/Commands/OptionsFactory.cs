@@ -7,8 +7,8 @@ public static class OptionsFactory
     public static Option<string> CreateNameOption()
     {
         var nameOption = new Option<string>(name: "--name",
-                description: "Name of the benchmark we want to test.")
-        { IsRequired = true };
+                description: "Name of the benchmark we want to test.",
+                getDefaultValue: () => "C125.9");
         nameOption.AddAlias("-n");
 
         return nameOption;
@@ -17,8 +17,8 @@ public static class OptionsFactory
     public static Option<string> CreateAlgorithmTypeOption()
     {
         var algorithmTypeOption = new Option<string>(name: "--type",
-                description: "Type of the algorithm")
-        { IsRequired = true }
+                description: "Type of the algorithm",
+                getDefaultValue: () => "heuristic")
             .FromAmong("exact", "heuristic");
         algorithmTypeOption.AddAlias("-t");
 
@@ -29,7 +29,7 @@ public static class OptionsFactory
     {
         var cmpOption = new Option<string>(name: "--cmp",
                 description: "Graph comparison type",
-                getDefaultValue: () => "vertices")
+                getDefaultValue: () => "vertices-then-edges")
             .FromAmong("vertices", "vertices-then-edges");
 
         return cmpOption;
@@ -95,8 +95,8 @@ public static class OptionsFactory
     public static Option<string> CreateAlgorithmOption()
     {
         var algorithmOption = new Option<string>(name: "--algorithm",
-            description: "Algorithm to execute")
-        { IsRequired = true }
+            description: "Algorithm to execute",
+            getDefaultValue: () => "max-clique")
             .FromAmong("mcs", "max-clique");
 
         return algorithmOption;
@@ -136,6 +136,26 @@ public static class OptionsFactory
             getDefaultValue: () => 1);
 
         return stepOption;
+    }
+
+    public static Option<int> CreateSamplesOption()
+    {
+        var samples = new Option<int>(name: "--samples",
+            description: "Number of graphs of the same size to take the average from",
+            getDefaultValue: () => 5);
+
+        return samples;
+    }
+
+    public static Option<string> CreateAlgorithmTypeOptionForBenchmark()
+    {
+        var algorithmTypeOption = new Option<string>(name: "--type",
+                description: "Type of the algorithm to run the benchmark on. Choose 'both' to run the benchmark for both algorithm types",
+                getDefaultValue: () => "both")
+            .FromAmong("exact", "heuristic", "both");
+        algorithmTypeOption.AddAlias("-t");
+
+        return algorithmTypeOption;
     }
 
     public static Option<bool?> CreateNoPlotOption()

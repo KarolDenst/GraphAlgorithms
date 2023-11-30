@@ -16,7 +16,7 @@ namespace GraphAlgorithms.MCS
             return (vertices1, vertices2);
         }
 
-        public static (int[], int[]) FindFast(Graph graph1, Graph graph2, ICliqueFastFinder finder, bool withEdges = false)
+        public static (int[], int[]) FindFast(Graph graph1, Graph graph2, ICliqueFastFinder finder, bool withEdges = true)
         {
             Graph modularProduct = ModularProduct.Calculate(graph1, graph2);
             List<int> maxClique = withEdges
