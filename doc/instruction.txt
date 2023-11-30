@@ -141,7 +141,7 @@ Additional functionalities.
         For example, to run the heuristic algorithm on the first graph instance listed there, `C125.9`, run 
             `./GraphAlgorithms dimacs --name C125.9 --type heuristic`
 
-        This will download a file with the test data to a newly created directory `GraphAlgorithms\Datasets`.
+        This will download a file with the test data to a newly created directory `Datasets`.
         Because the graphs available in the benchmark set are big, it's not recommended to use them for testing the exact algorithm.
 
     Benchmarking (without Python installed -- can be used at the laboratory workstations)
@@ -150,11 +150,11 @@ Additional functionalities.
             `./GraphAlgorithms benchmark --algorithm max-clique --min-size 5 --max-size 100 --no-plot`
 
         The output of this command contains information about the files that the benchmarks were saved to, for example:
-            benchmark saved at C:\Projects\GraphAlgorithms\GraphAlgorithms\Benchmarks\11-17-23_18-07-34\exact.json
-            benchmark saved at C:\Projects\GraphAlgorithms\GraphAlgorithms\Benchmarks\11-17-23_18-07-34\heuristic.json
+            benchmark saved at Benchmarks\11-30-23_18-03-38\exact.json
+            benchmark saved at Benchmarks\11-30-23_18-03-38\heuristic.json
         
         You can plot these test results by running the following:
-            plotter/plotter ./Benchmarks/11-17-23_18-07-34
+            plotter/plotter ./Benchmarks/11-30-23_18-03-38
 
     Benchmarking (with Python & Matplotlib installed)
         Configure the program by providing a path to the Python interpreter.

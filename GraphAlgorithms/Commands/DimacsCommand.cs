@@ -1,13 +1,13 @@
-﻿using System.CommandLine;
-using System.Diagnostics;
-using GraphAlgorithms.Clique;
+﻿using GraphAlgorithms.Clique;
 using GraphAlgorithms.Graphs;
+using System.CommandLine;
+using System.Diagnostics;
 
 namespace GraphAlgorithms.Commands;
 
 public static class DimacsCommand
 {
-    private static readonly string DatasetDirPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory)!.Parent!.Parent!.FullName, "Datasets");
+    private static readonly string DatasetDirPath = "Datasets";
 
     public static Command Create()
     {
