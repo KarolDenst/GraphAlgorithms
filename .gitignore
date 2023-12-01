@@ -403,3 +403,8 @@ Desktop.ini
 launchSettings.json
 Benchmarks/
 Config/
+
+GraphAlgorithms/Scripts/.venv
+GraphAlgorithms/Scripts/build
+GraphAlgorithms/Scripts/dist
+GraphAlgorithms/Scripts/plotter.spec
