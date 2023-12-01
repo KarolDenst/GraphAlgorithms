@@ -184,6 +184,9 @@ Additional functionalities.
         This will download a file with the test data to a newly created directory `Datasets`.
         Because the graphs available in the benchmark set are big, it's not recommended to use them for testing the exact algorithm.
 
+    NOTICE: the functionality described below is NOT AVAILABLE in the base version of the project.
+    We decided not to include it in the base version as it increases the size of the zip archive significantly.
+    In case you want to gain access to this functionality, please reach out to the authors via email: aleksy.balazinski.stud@pw.edu.pl.
     Benchmarking (without Python installed -- can be used at the laboratory workstations)
         The `benchmark` command allows for plotting the algorithm's execution time against the size of the graph.
         For example, to test the max-clique algorithm for a sequence of graphs of minimum size 5 and maximum size 100, with each having 2 more vertices than the previous one in the sequence, type
