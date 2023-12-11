@@ -7,7 +7,7 @@ Disclaimers.
 
 Running the application (Windows).
     Download and unzip the archive with the project.
-    Open the unzipped folder in PowerShell or any other terminal; PowerShell can be launched in one of two ways:
+    Open the unzipped folder in PowerShell (any other terminal should work but only PowerShell was tested); PowerShell can be launched in one of two ways:
         a.
             1. open the project folder in File Explorer,
             2. use the Alt+D shortcut (address bar on top now highlights),
