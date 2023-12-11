@@ -138,6 +138,11 @@ Running the application (Windows).
             --no-plot                             Suppress automatic plotting of benchmark results
             -?, -h, --help                        Show help and usage information
 
+        Run the heuristic maximum clique finding algorithm on the C125.9 DIMACS benchmark instance with default size definition (vertex count)
+            `./GraphAlgorithms dimacs -n C125.9 -t heuristic`
+            The command gives the following output:
+                The heuristic algorithm found a clique with 31 vertices [26 ms]
+
 Building the application (Windows).
     To build the application from source, run from the Source folder:
         `dotnet build GraphAlgorithms --configuration Release`
