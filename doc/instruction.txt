@@ -2,22 +2,12 @@ Description.
     GraphAlgorithms -- Collection of graph algorithms.
 
 Disclaimers.
+    This is a short instruction. For a more detailed version check detailed_instruction.txt.
     The instruction below was tested on a laboratory computer available in room 311.
-
-Conventions used in the instruction.
-    The instruction contains commands to type into the terminal (throughout the instruction, PowerShell is assumed to be used; more information on using PowerShell can be found in the subsequent sections).
-    These commands are placed between backticks (`), like `command`.
-    They are meant to be interpreted verbatim (can be copy-pasted into the terminal) unless they contain text between the angle brackets (< and >).
-    The text between < and > is a placeholder and is meant to be filled in by the user.
-    Backticks are also used to denote filenames, command options, etc.
-
-Prerequisites for the base version.
-    To run the program in the base version, .NET 7 has to be installed.
-    It's been verified that it's already installed on the computers in the laboratory so no additional steps are required.
 
 Running the application (Windows).
     Download and unzip the archive with the project.
-    Open the unzipped folder in PowerShell; this can be done in one of two ways:
+    Open the unzipped folder in PowerShell (any other terminal should work but only PowerShell was tested); PowerShell can be launched in one of two ways:
         a.
             1. open the project folder in File Explorer,
             2. use the Alt+D shortcut (address bar on top now highlights),
@@ -30,14 +20,70 @@ Running the application (Windows).
     The `ls` command will show 4 folders: Doc, Example, Exe, and Source.
 
     To run the program navigate to the Exe folder by typing `cd Exe`.
-    Again using the `ls` command it can be verified that this folder contains some number of DLL files and other folders;
-    the only file that is in the user's interest is `GraphAlgorithms.exe`.
-
     To view the built-in user manual run the program with the `--help` option, i.e.
         `./GraphAlgorithms --help`
     
     This will give a list of available commands. To learn more about individual commands, run each of them with the `--help` option, e.g.
         `./GraphAlgorithms max-clique --help`
+
+    For demonstration purposes, you can run the following commands (it is assumed that the current working directory is still GraphAlgorithms/Exe):
+        Find the maximum clique on file `example3_size3.txt` using the exact algorithm and default size definition (vertices-then-edges size)
+            `./GraphAlgorithms max-clique -f ../Examples/example3_size3.txt -t exact`
+            The command gives the following output:
+                1, 2
+                Number of vertices: 2
+
+                0 1 2
+                2 0 1
+                0 5 0
+            This means that a clique consisting of two vertices (with indices 1 and 2) was found.
+            The part of the adjacency matrix corresponding to the clique is colored red.
+
+        Run the heuristic maximum common subgraph algorithm on graphs from files `example6_size4.txt` and `example7_size4.txt`
+            `./GraphAlgorithms mcs -f ../Examples/example6_size4.txt -f2 ../Examples/example7_size4.txt -t heuristic`
+            The command gives the following output:
+                MCS in graph 1: 0, 1, 2, 3
+                MCS in graph 2: 0, 2, 3, 1
+                4 vertices
+
+                Graph 1:
+                0 1 5 0
+                2 0 0 0
+                2 6 0 3
+                0 7 5 0
+                Graph 2:
+                0 0 2 1
+                0 0 1 4
+                1 3 0 1
+                0 4 1 0
+            This means that a maximum common subgraph with 4 vertices was found, and the isomorphism is given by:
+                0, 1, 2, 3
+                0, 2, 3, 1
+            where the 1st row lists the vertices in a subgraph of example6_size4.txt, and the 2nd row lists corresponding vertices of the subgraph of example7_size4.txt
+
+        Calculate the metric between two graphs (in this example, it is the same graph, located in file `example26_size8.txt`).
+            `./GraphAlgorithms metric -f ../Examples/example26_size8.txt -f2 ../Examples/example26_size8.txt -t heuristic`
+            As expected, the result is 0.
+        
+        Calculate the size of the graph given in the file `example26_size8.txt`. In this example, the default size (vertex-then-edge) definition is used.
+            For a definition of size refer to the report file.
+            `./GraphAlgorithms size -f ../Examples/example26_size8.txt`
+            The output of this command is:
+                Graph size: (8, 300)
+
+
+        Print the adjacency matrix of a graph given in the file `example26_size8.txt`.
+            `./GraphAlgorithms graph -f ../Examples/example26_size8.txt`
+            The output of this command is the adjacency matrix:
+                0 1 5 5 0 3 0 1
+                0 0 3 9 10 1 5 10
+                0 15 0 1 10 8 7 15
+                14 12 1 0 9 0 2 12
+                12 7 11 0 0 1 0 13
+                5 11 13 9 9 0 10 0
+                1 2 2 5 4 14 0 6
+                0 3 0 0 0 0 3 0
+
     
     What follows is a description of all available commands:
         max-clique  Finds maximum clique in a graph. For this command the following options are available:
@@ -92,88 +138,16 @@ Running the application (Windows).
             --no-plot                             Suppress automatic plotting of benchmark results
             -?, -h, --help                        Show help and usage information
 
-    For demonstration purposes, you can run the following commands (it is assumed that the current working directory is still GraphAlgorithms/Exe):
-        Find the maximum clique on file `example3_size3.txt` using the exact algorithm and default size definition (vertices-then-edges size)
-            `./GraphAlgorithms max-clique -f ../Examples/example3_size3.txt -t exact`
-            The command gives the following output:
-                1, 2
-                Number of vertices: 2
-
-                0 1 2
-                2 0 1
-                0 5 0
-            This means that a clique consisting of two vertices (with indices 1 and 2) was found.
-            The part of the adjacency matrix corresponding to the clique is colored red.
-        
         Run the heuristic maximum clique finding algorithm on the C125.9 DIMACS benchmark instance with default size definition (vertex count)
             `./GraphAlgorithms dimacs -n C125.9 -t heuristic`
             The command gives the following output:
                 The heuristic algorithm found a clique with 31 vertices [26 ms]
 
-        Run the heuristic maximum common subgraph algorithm on graphs from files `example6_size4.txt` and `example7_size4.txt`
-            `./GraphAlgorithms mcs -f ../Examples/example6_size4.txt -f2 ../Examples/example7_size4.txt -t heuristic`
-            The command gives the following output:
-                MCS in graph 1: 0, 1, 2, 3
-                MCS in graph 2: 0, 2, 3, 1
-                4 vertices
-
-                Graph 1:
-                0 1 5 0
-                2 0 0 0
-                2 6 0 3
-                0 7 5 0
-                Graph 2:
-                0 0 2 1
-                0 0 1 4
-                1 3 0 1
-                0 4 1 0
-            This means that a maximum common subgraph with 4 vertices was found, and the isomorphism is given by:
-                0, 1, 2, 3
-                0, 2, 3, 1
-            where the 1st row lists the vertices in a subgraph of example6_size4.txt, and the 2nd row lists corresponding vertices of the subgraph of example7_size4.txt
-
-        Calculate the metric between two graphs (in this example, it is the same graph, located in file `example26_size8.txt`).
-            `./GraphAlgorithms metric -f ../Examples/example26_size8.txt -f2 ../Examples/example26_size8.txt -t heuristic`
-            As expected, the result is 0.
-        
-        Calculate the size of the graph given in the file `example26_size8.txt`. In this example, the default size (vertex-then-edge) definition is used.
-            For a definition of size refer to the report file.
-            `./GraphAlgorithms size -f ../Examples/example26_size8.txt`
-            The output of this command is:
-                Graph size: (8, 300)
-
-
-        Print the adjacency matrix of a graph given in the file `example26_size8.txt`.
-            `./GraphAlgorithms graph -f ../Examples/example26_size8.txt`
-            The output of this command is the adjacency matrix:
-                0 1 5 5 0 3 0 1
-                0 0 3 9 10 1 5 10
-                0 15 0 1 10 8 7 15
-                14 12 1 0 9 0 2 12
-                12 7 11 0 0 1 0 13
-                5 11 13 9 9 0 10 0
-                1 2 2 5 4 14 0 6
-                0 3 0 0 0 0 3 0
-
 Building the application (Windows).
-    It's assumed that the commands are executed from PowerShell as indicated in the previous section. 
-    It's also assumed that the current working directory is the `Source` folder of the project.
-        If you're following the instructions step-by-step and are currently in the `Exe` folder, navigate to the root folder, by typing `cd ../Source`.
-        If instead, your current working directory is the root folder of the project, type `cd Source`.
-
-    To build the application from source, run 
+    To build the application from source, run from the Source folder:
         `dotnet build GraphAlgorithms --configuration Release`
 
-    Navigate to the build directory located at `GraphAlgorithms/bin/Release/net7.0`.
-    The compiled executable is located in the subfolder `Source/GraphAlgorithms/bin/Release/net7.0/`
-    Navigate to this folder by typing
-	    cd GraphAlgorithms/bin/Release/net7.0
-
-    The executable name is `GraphAlgorithms.exe`.
-    You can verify that the program has compiled correctly by running, for example,
-	    `./GraphAlgorithms --help`
-    or
-        `./GraphAlgorithms --version`
+    The build files will be places in GraphAlgorithms/bin/Release/net7.0.
 
 Additional functionalities.
     DIMACS benchmark set.
@@ -183,26 +157,3 @@ Additional functionalities.
 
         This will download a file with the test data to a newly created directory `Datasets`.
         Because the graphs available in the benchmark set are big, it's not recommended to use them for testing the exact algorithm.
-
-    NOTICE: the functionality described below is NOT AVAILABLE in the base version of the project.
-    We decided not to include it in the base version as it increases the size of the zip archive significantly.
-    In case you want to gain access to this functionality, please reach out to the authors via email: aleksy.balazinski.stud@pw.edu.pl.
-    
-    Benchmarking (without Python installed -- can be used at the laboratory workstations)
-        The `benchmark` command allows for plotting the algorithm's execution time against the size of the graph.
-        For example, to test the max-clique algorithm for a sequence of graphs of minimum size 5 and maximum size 100, with each having 2 more vertices than the previous one in the sequence, type
-            `./GraphAlgorithms benchmark --algorithm max-clique --min-size 5 --max-size 100 --no-plot`
-
-        The output of this command contains information about the files that the benchmarks were saved to, for example:
-            benchmark saved at Benchmarks\11-30-23_18-03-38\exact.json
-            benchmark saved at Benchmarks\11-30-23_18-03-38\heuristic.json
-        
-        You can plot these test results by running the following:
-            plotter/plotter ./Benchmarks/11-30-23_18-03-38
-
-    Benchmarking (with Python & Matplotlib installed)
-        Configure the program by providing a path to the Python interpreter.
-            `./GraphAlgorithms config --pypath <path to the interpreter>`
-        
-        Run the test:
-            `./GraphAlgorithms benchmark --algorithm max-clique --min-size 5 --max-size 100`
