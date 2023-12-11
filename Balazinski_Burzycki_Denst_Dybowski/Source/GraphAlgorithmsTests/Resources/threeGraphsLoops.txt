@@ -1,0 +1,25 @@
+﻿3
+3
+0 2 3
+4 0 6 
+7 8 0
+very important note
+read this carefuly
+
+4
+0 2 3 4
+5 1 7 8
+9 10 0 12
+13 14 15 0
+
+2
+0 2
+3 0
+this 
+is
+the 
+end 
+of
+the 
+file
+goodbye
