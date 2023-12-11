@@ -6,7 +6,15 @@ Disclaimers.
     The instruction below was tested on a laboratory computer available in room 311.
 
 Running the application (Windows).
-    Open the main folder in PowerShell.
+    Download and unzip the archive with the project.
+    Open the unzipped folder in PowerShell or any other terminal; PowerShell can be launched in one of two ways:
+        a.
+            1. open the project folder in File Explorer,
+            2. use the Alt+D shortcut (address bar on top now highlights),
+            3. type `powershell` and hit Enter.
+        b. 
+            1. use the Windows+X shortcut and choose PowerShell from the list, 
+            2. navigate to the project folder using the command `cd <path to the unzipped folder>`.
 
     In what follows it is assumed that the current working directory was set to the project folder as indicated above.
     The `ls` command will show 4 folders: Doc, Example, Exe, and Source.
@@ -75,6 +83,60 @@ Running the application (Windows).
                 5 11 13 9 9 0 10 0
                 1 2 2 5 4 14 0 6
                 0 3 0 0 0 0 3 0
+
+    
+    What follows is a description of all available commands:
+        max-clique  Finds maximum clique in a graph. For this command the following options are available:
+            -f, --file <file> (REQUIRED)          Path to file with graphs
+            -i, --index <index>                   Index of the graph in the file [default: 0]
+            -t, --type <exact|heuristic>          Type of the algorithm [default: heuristic]
+            --cmp <vertices|vertices-then-edges>  Graph comparison type [default: vertices-then-edges]
+            -?, -h, --help                        Show help and usage information
+
+        mcs         Finds maximum common subgraph. For this command the following options are available:
+            -f, --file <file> (REQUIRED)          Path to file with graphs
+            -f2, --file2 <file2>                  Path to the second file with graphs
+            -i1, --index1 <index1>                Index of the 1st graph in the file [default: 0]
+            -i2, --index2 <index2>                Index of the 2nd graph in the file [default: 0]
+            -t, --type <exact|heuristic>          Type of the algorithm [default: heuristic]
+            --cmp <vertices|vertices-then-edges>  Graph comparison type [default: vertices-then-edges]
+            -?, -h, --help                        Show help and usage information
+
+        metric      Find the distance between two graphs.
+            -f, --file <file> (REQUIRED)  Path to file with graphs
+            -f2, --file2 <file2>          Path to the second file with graphs
+            -i1, --index1 <index1>        Index of the 1st graph in the file [default: 0]
+            -i2, --index2 <index2>        Index of the 2nd graph in the file [default: 0]
+            -t, --type <exact|heuristic>  Type of the algorithm [default: heuristic]
+            -?, -h, --help                Show help and usage information
+
+        size        Calculates the size of a graph.
+            -f, --file <file> (REQUIRED)  Path to file with graphs
+            -i, --index <index>           Index of the graph in the file [default: 0]
+            -?, -h, --help                Show help and usage information
+
+        graph       Show the adjacency matrix of a graph.
+            -f, --file <file> (REQUIRED)  Path to file with graphs
+            -i, --index <index>           Index of the graph in the file [default: 0]
+            -?, -h, --help                Show help and usage information
+
+        NOTICE: The commands below are an additional functionality and were used in creating the report.
+        They are available in case the user would like to recreate the results from the report.
+
+        config      Configures the program.
+            --pypath <pypath>  Path to Python interpreter
+            -?, -h, --help     Show help and usage information
+
+        benchmark   Performs benchmark test on random graphs.
+            --algorithm <max-clique|mcs>          Algorithm to execute [default: max-clique]
+            -t, --type <both|exact|heuristic>     Type of the algorithm to run the benchmark on. Choose 'both' to run the benchmark for both algorithm types [default: both]
+            --cmp <vertices|vertices-then-edges>  Graph comparison type [default: vertices-then-edges]
+            --density <density>                   Density of the generated graphs [default: 0.5]
+            --min-size <min-size>                 Minimum number of vertices in the generated graph [default: 3]
+            --max-size <max-size>                 Maximum number of vertices in the generated graph [default: 100]
+            --samples <samples>                   Number of graphs of the same size to take the average from [default: 5]
+            --no-plot                             Suppress automatic plotting of benchmark results
+            -?, -h, --help                        Show help and usage information
 
 Building the application (Windows).
     To build the application from source, run from the Source folder:
