@@ -31,8 +31,7 @@ Running the application (Windows).
     The `ls` command will show 4 folders: Doc, Example, Exe, and Source.
 
     To run the program navigate to the Exe folder by typing `cd Exe`.
-    Again using the `ls` command it can be verified that this folder contains some number of DLL files and other folders;
-    the only file that is in the user's interest is `GraphAlgorithms.exe`.
+    The only file that is in the user's interest is `GraphAlgorithms.exe`.
 
     To view the built-in user manual run the program with the `--help` option, i.e.
         `./GraphAlgorithms --help`
